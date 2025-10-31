@@ -1,0 +1,19 @@
+# Eclipse IDE (이클립스 설정 파일)
+.settings/
+.classpath
+.project
+
+# Build output (컴파일된 .class 파일)
+build/
+*.class
+
+# Temporary files (Tomcat/Eclipse 임시 파일)
+tmp/
+.metadata/
+
+# Web archives (빌드된 최종 패키지)
+*.war
+*.ear
+
+# User-specific (개인 설정 파일)
+local.properties
