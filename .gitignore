@@ -10,6 +10,7 @@ build/
 *.class
 *.war
 *.ear
+/out/
 
 # Eclipse Dynamic Web Project 빌드 출력 폴더
 /src/main/webapp/WEB-INF/classes/
