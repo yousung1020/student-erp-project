@@ -23,12 +23,11 @@
 
 **절대 이클립스에서 `New Project`를 하지 마세요!**
 
-1.  **Git Clone**: 먼저 이 리포지토리를 각자 PC의 원하는 폴더(예: `C:\dev\`)로 `git clone` 받습니다.
-2.  **Import**: 이클립스를 켜고 `File > Import... > General > Existing Projects into Workspace`를 선택합니다.
-3.  **폴더 지정**: `Select root directory:`에서 방금 `clone` 받은 **프로젝트 폴더**(예: `C:\dev\servlet-student-erp`)를 선택합니다.
-4.  **[주의!]** `Options`에서 **`Copy projects into workspace` 체크박스를 반드시 해제**해야 합니다. (체크하면 Git 연동이 꼬입니다.)
-5.  **서버 설정**: 이클립스 `Servers` 탭에서 Tomcat 서버를 [개발 환경]과 동일한 버전으로 설정하고, 프로젝트를 서버에 추가(Add)합니다.
-6.  **라이브러리**: 필요한 `.jar` 파일들은 **`WebContent/WEB-INF/lib`** 폴더에 이미 포함되어 있습니다. **절대 개인이 임의로 `.jar` 파일을 추가하거나 삭제하지 마세요.**
+*  **Import**: 이클립스를 켜고 `File > Import... > Projects from git`를 선택합니다.
+*  **레포지토리 지정**: `Existing local repository`을 선택하고, `clone` 받은 **프로젝트 폴더**를 선택합니다.
+*  **[주의!]** `Options`에서 **`Copy projects into workspace` 체크박스를 반드시 해제**해야 합니다. (체크하면 Git 연동이 꼬입니다.)
+*  **서버 설정**: 프로젝트 마우스 오른쪽 클릭 > `properties`로 이동합니다. 그리고 `Dynamic Web Module` (톰캣 10.1이므로 5.0 또는 6.0)과 Java (JDK 11 또는 17)가 README.md의 환경과 동일하게 체크되어 있는지 확인하고 Apply합니다. 확인이 되었으면 servers 탭에서 tomcat 서버를 등록합니다.
+*  **라이브러리**: 필요한 `.jar` 파일들은 **`WebContent/WEB-INF/lib`** 폴더에 이미 포함되어 있습니다. **절대 개인이 임의로 `.jar` 파일을 추가하거나 삭제하지 마세요.**
 
 ---
 
