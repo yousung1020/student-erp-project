@@ -1,0 +1,352 @@
+@charset "UTF-8";
+/* ================================================= */
+/* === [요청 UI] 1. CSS 탭 기법 기본 설정 (핵심 로직) === */
+/* ================================================= */
+
+/* 기존 레이아웃을 사용하지 않기 위해 main 섹션 하위 요소들을 재정의 */
+#main {
+    width: 1200px; /* 기존 main 너비 유지 */
+    margin: 20px auto; /* 중앙 정렬 */
+    padding: 0 20px;
+}
+
+/* 모든 콘텐츠 영역을 기본적으로 숨김 (CSS 탭 기법용) */
+.content-section {
+    display: none;
+    padding: 20px;
+    border: 1px solid #ddd;
+    margin-top: 10px;
+    min-height: 400px; /* 내용이 적을 때 최소 높이 설정 */
+}
+
+/* 탭 버튼으로 사용할 라디오 버튼을 숨김 */
+.tab-radio {
+    display: none;
+}
+
+/* 외부 탭 표시 로직 */
+#tab-cert-mgmt:checked ~ #cert-mgmt-content { display: block; }
+#tab-job-postings:checked ~ #job-postings-content { display: block; }
+
+/* 내부 탭 표시 로직 */
+#sub-tab-my-certs:checked ~ #cert-mgmt-sub-content #my-certs-list { display: block; }
+#sub-tab-search-certs:checked ~ #cert-mgmt-sub-content #cert-search-area { display: block; }
+
+/* 내부 자격증 목록/검색 영역 기본 숨김 */
+#my-certs-list, #cert-search-area {
+    display: none;
+    padding-top: 15px;
+}
+
+/* ================================================= */
+/* === [요청 UI] 2. 헤더 및 레이아웃 스타일링 === */
+/* ================================================= */
+
+/* --- Body 바로 아래 Placeholder (푸터 1) --- */
+#top-footer-placeholder {
+    width: 100%;
+    background-color: #f8f8f8;
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#top-footer-content {
+    /* #main 및 #top과 동일하게 중앙 정렬 */
+    width: 1200px; 
+    margin: 0 auto;
+    padding: 0 20px;
+    font-size: 12px;
+    color: #888;
+    text-align: right; 
+}
+
+
+/* --- 최상단 헤더 영역 (#top) --- */
+#top {
+    /* 중앙 정렬 및 너비 고정 */
+    width: 1200px;
+    margin: 20px auto 0 auto; 
+    padding: 0 20px;
+    
+    /* 로고가 삭제된 상태로 app-header만 중앙에 배치 */
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 1px solid #eee; /* #top에 경계선 배치 */
+}
+
+/* --- 페이지 헤더 (#app-header) --- */
+#app-header {
+    width: 100%; /* #top 컨테이너 내부의 전체 너비 사용 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    margin-bottom: 0;
+}
+#app-header-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1a73e8;
+}
+#app-user-info {
+    font-size: 14px;
+}
+#app-user-info span {
+    margin-right: 15px;
+    padding-right: 15px;
+    border-right: 1px solid #ccc;
+}
+#app-user-info a {
+    text-decoration: none;
+    color: #666;
+}
+
+/* --- 외부 탭 버튼 스타일 (label) --- */
+.tab-group { margin-bottom: 0; }
+.tab-label {
+    display: inline-block;
+    padding: 10px 15px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 5px 5px 0 0;
+    background-color: #f0f0f0;
+    margin-right: 5px;
+    font-weight: bold;
+}
+/* 외부 탭: 선택된 상태 */
+#tab-cert-mgmt:checked ~ .tab-group .tab-label[for='tab-cert-mgmt'],
+#tab-job-postings:checked ~ .tab-group .tab-label[for='tab-job-postings'] {
+    border: 1px solid #ccc;
+    border-bottom: 1px solid #fff; 
+    background-color: #fff;
+}
+
+/* --- 내부 탭 버튼 스타일 (label) --- */
+.sub-tab-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.sub-tab-label {
+    display: inline-block;
+    padding: 8px 15px;
+    margin-right: 10px;
+    background-color: #e0e0e0;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+}
+/* 내부 탭: 선택된 상태 */
+#sub-tab-my-certs:checked ~ #cert-mgmt-sub-content .sub-tab-group .sub-tab-label[for='sub-tab-my-certs'],
+#sub-tab-search-certs:checked ~ #cert-mgmt-sub-content .sub-tab-group .sub-tab-label[for='sub-tab-search-certs'] {
+    background-color: #1a73e8;
+    color: white;
+    border-color: #1a73e8;
+}
+.add-cert-btn {
+    background-color: #fff;
+    color: #1a73e8;
+    border: 1px solid #1a73e8;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: auto; /* 우측 끝으로 이동 */
+}
+
+/* --- 자격증 카드 스타일 --- */
+.cert-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.cert-card {
+    width: calc(33.33% - 14px); /* 한 줄에 3개 배치 (1200px 기준) */
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    min-height: 200px;
+    position: relative;
+}
+.cert-card h4 {
+    margin-top: 0;
+    color: #333;
+    font-size: 18px;
+    padding-right: 60px;
+}
+.cert-card p {
+    font-size: 13px;
+    color: #666;
+}
+.cert-card-status {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #e6f7ff;
+    color: #096a92;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+}
+.card-footer {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+}
+.detail-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* --- 검색 화면 스타일 --- */
+.search-input-group {
+    display: flex;
+    margin-bottom: 20px;
+}
+.search-input-group input {
+    flex-grow: 1;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-right: none;
+    font-size: 16px;
+}
+.search-input-group button {
+    padding: 12px 20px;
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+/* 검색 결과 카드용 상태 태그 */
+.search-result-tag {
+    background-color: #fff3cd;
+    color: #664d03;
+    top: 20px;
+    right: 20px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    position: absolute;
+}
+
+/* --- 채용 공고 카드 스타일 (자격증 카드와 구분) --- */
+.job-list-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.job-card {
+    width: calc(33.33% - 14px); 
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    min-height: 220px; 
+    position: relative;
+}
+.job-card h4 {
+    margin-top: 0;
+    color: #333;
+    font-size: 18px;
+    padding-right: 60px;
+}
+.job-card p {
+    font-size: 13px;
+    color: #666;
+}
+.job-card-tag {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #e6f7ff;
+    color: #096a92;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* ================================================= */
+/* === [추가] Main 섹션 밖 표준 FOOTER 스타일링 === */
+/* ================================================= */
+
+footer {
+    background-color: #333;
+    color: #f0f0f0;
+    padding: 30px 0;
+    margin-top: 40px; 
+    border-top: 5px solid #1a73e8; 
+}
+
+#footer-content {
+    width: 1200px; 
+    margin: 0 auto;
+    padding: 0 20px;
+    
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-links, .footer-info, .footer-contact {
+    width: 30%; 
+}
+
+footer h4 {
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #555;
+    padding-bottom: 5px;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+footer li {
+    margin-bottom: 8px;
+}
+
+footer a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+footer a:hover {
+    color: #fff;
+}
+
+footer p {
+    font-size: 14px;
+    color: #ccc;
+    margin-bottom: 5px;
+}
+
+#copyright {
+    text-align: center;
+    font-size: 12px;
+    color: #888;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #555;
+    width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
