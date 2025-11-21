@@ -140,4 +140,30 @@ public class AdminMemberDAO {
 		}
         return result;
 	}
+	
+	public boolean checkMemberIdExists(String memberId) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		boolean exists = false;
+		
+		String sql = "SELECT COUNT(*) FROM member WHERE member_id = ?";
+		
+		try {
+			conn = JdbcConnectUtil.getConnetion();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				if (rs.getInt(1) > 0) {
+					exists = true;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return exists;
+	}
 }

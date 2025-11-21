@@ -1,21 +1,34 @@
 package service.admin;
 
+import dao.admin.AdminDeptDAO;
 import dao.admin.AdminMemberDAO;
 import dto.admin.AdminMemberDeleteDTO;
 import dto.admin.AdminMemberDetailDTO;
 import dto.admin.AdminMemberSelectDTO;
 import dto.admin.AdminMemberUpdateDTO;
-import service.admin.exception.MemberNotFoundException;
 import dto.admin.AdminMemberCreateDTO;
+import dto.admin.DeptDTO;
+import service.admin.exception.MemberNotFoundException;
+
 import java.util.List;
 
 public class AdminMemberService {
 	private AdminMemberDAO adminMemberDAO = new AdminMemberDAO();
+	private AdminDeptDAO adminDeptDAO = new AdminDeptDAO();
 	
-	public boolean registerMember(AdminMemberCreateDTO dto) {
-		int result = adminMemberDAO.insertMember(dto);
+	public int registerMember(AdminMemberCreateDTO dto) {
+		String memberId = dto.getMemberId();
+		if (adminMemberDAO.checkMemberIdExists(memberId)) {
+			return 0;
+		}
 		
-		return result > 0;
+		try {
+			int result = adminMemberDAO.insertMember(dto);
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
 	}
 	
 	public List<AdminMemberSelectDTO> getMemberList(){
@@ -50,4 +63,9 @@ public class AdminMemberService {
 		return result > 0;
 		
 	}
+	
+	public List<DeptDTO> getAllDepartments() {
+        // 부서 DAO를 호출하여 목록을 반환합니다.
+        return adminDeptDAO.selectAllDepartments();
+    }
 }
