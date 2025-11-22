@@ -11,6 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-
+회원가입 페이지입니다.
 </body>
 </html>
