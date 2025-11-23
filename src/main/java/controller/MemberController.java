@@ -60,6 +60,29 @@ public class MemberController extends HttpServlet {
         String memberName = request.getParameter("memberName");
         String memberEmail = request.getParameter("memberEmail");
         
+        if (memberPassword == null || !memberPassword.equals(passwordConfirm)) {
+            // 1) 에러 메시지 설정
+            request.setAttribute("errorType", "PASSWORD_MISMATCH");
+            request.setAttribute("errorMessage", "비밀번호가 일치하지 않습니다. 다시 확인해주세요.");
+            
+            // 2) 입력했던 값 유지 (비밀번호 제외)
+            // (studentId, name, memberEmail 등은 value="${param.xxx}" 덕분에 자동 유지되지만, 
+            // 혹시 모르니 명시적으로 넘겨주거나 JSP 기능을 활용합니다.)
+            
+            // 3) ★ 중요: 학과 목록 다시 조회 (이게 없으면 드롭다운이 텅 빔)
+            try {
+                List<DepartmentDTO> departments = departmentService.deptFindAll();
+                request.setAttribute("departments", departments);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // 4) JSP로 되돌려보내기
+            request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp").forward(request, response);
+            
+            return; // ★ 매우 중요: 여기서 메서드를 강제 종료해야 아래 회원가입 로직이 실행 안 됨
+        }
+        
         int departmentId = 0;
         String departmentParam = request.getParameter("deptId");
         

@@ -97,13 +97,20 @@
             
             <!-- 비밀번호 확인 (보안상 유지하지 않음) -->
             <div>
-                <label for="passwordConfirm" class="block text-sm font-semibold text-gray-700 mb-1">비밀번호 확인</label>
-                <input type="password" id="passwordConfirm" name="passwordConfirm" required
-                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 transition duration-150"
-                       placeholder="다시 한번 입력하세요">
-                <!-- 🟥 비밀번호 불일치 오류 표시 (JS로 제어) -->
-                <div class="error-message" id="password-confirm-error"></div>
-            </div>
+			    <label for="passwordConfirm" class="block text-sm font-semibold text-gray-700 mb-1">비밀번호 확인</label>
+			    <input type="password" id="passwordConfirm" name="passwordConfirm" required
+			           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 transition duration-150"
+			           placeholder="다시 한번 입력하세요">
+			           
+			    <% 
+			        String errType = (String) request.getAttribute("errorType");
+			        if (errType != null && errType.equals("PASSWORD_MISMATCH")) { 
+			    %>
+			        <div class="error-message">
+			            <%= request.getAttribute("errorMessage") %>
+			        </div>
+			    <% } %>
+			</div>
 
             <!-- 이름 -->
             <div>
