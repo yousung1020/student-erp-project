@@ -14,4 +14,8 @@ public class DepartmentService {
 
         return departments;
     }
+
+    public String findDeptNameById(int deptId) {
+        return departmentDAO.findDeptNameById(deptId);
+    }
 }

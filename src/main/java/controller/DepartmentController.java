@@ -1,5 +1,6 @@
 package controller;
 
+import dto.department.DepartmentDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,7 +10,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-import dto.member.DepartmentDTO;
 import dao.department.DepartmentDAO;
 
 @WebServlet(name = "DepartmentController", urlPatterns = "/api/departments")
@@ -53,19 +53,19 @@ public class DepartmentController extends HttpServlet {
         
         for (int i = 0; i < departments.size(); i++) {
             DepartmentDTO dept = departments.get(i);
-            
+
             // 객체 시작
             jsonBuilder.append("{");
-            
+
             // "deptId" 필드 추가
-            jsonBuilder.append("\"deptId\":\"").append(escapeJson(dept.getDeptId())).append("\",");
-            
+            jsonBuilder.append("\"deptId\":\"").append(escapeJson(Integer.toString(dept.getDeptId()))).append("\",");
+
             // "deptName" 필드 추가
             jsonBuilder.append("\"deptName\":\"").append(escapeJson(dept.getDeptName())).append("\"");
-            
+
             // 객체 종료
             jsonBuilder.append("}");
-            
+
             // 마지막 요소가 아니면 콤마 추가
             if (i < departments.size() - 1) {
                 jsonBuilder.append(",");

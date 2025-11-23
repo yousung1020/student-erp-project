@@ -48,7 +48,7 @@
             <!-- ID (학번) -->
             <div>
                 <label for="studentId" class="block text-sm font-semibold text-gray-700 mb-1">학번 (ID)</label>
-                <input type="text" id="studentId" name="studentId" required 
+                <input type="text" id="studentId" name="memberId" required
                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 transition duration-150"
                        placeholder="학번을 입력하세요"
                        value="${param.studentId}">
@@ -57,7 +57,7 @@
             <!-- 비밀번호 -->
             <div>
                 <label for="password" class="block text-sm font-semibold text-gray-700 mb-1">비밀번호</label>
-                <input type="password" id="password" name="password" required
+                <input type="password" id="password" name="memberPassword" required
                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 transition duration-150"
                        placeholder="비밀번호를 입력하세요">
                 <!-- 로그인 실패 시 비밀번호는 비워두는 것이 일반적입니다. -->
@@ -78,16 +78,15 @@
         </div>
     </div>
 
-    <form method="POST" action="${pageContext.request.contextPath}/member/login">
-        <%-- 로그인 실패 시 컨트롤러가 보낸 에러 메세지 표시 --%>
-        <c:if test="${not empty loginError}">
-            <p>${loginError}</p>
-        </c:if>
+<%--    <form method="POST" action="${pageContext.request.contextPath}/member/login">--%>
+<%--        &lt;%&ndash; 로그인 실패 시 컨트롤러가 보낸 에러 메세지 표시 &ndash;%&gt;--%>
+<%--        <c:if test="${not empty loginError}">--%>
+<%--            <p>${loginError}</p>--%>
+<%--        </c:if>--%>
 
-        <input type="text" name="memberId" placeholder="아이디" required />
-            <input type="password" name="memberPassword" placeholder="패스워드" required />
-        <button type="submit">로그인</button>
-    </form>
-</div>
+<%--        <input type="text" name="memberId" placeholder="아이디" required />--%>
+<%--            <input type="password" name="memberPassword" placeholder="패스워드" required />--%>
+<%--        <button type="submit">로그인</button>--%>
+<%--    </form>--%>
 </body>
 </html>

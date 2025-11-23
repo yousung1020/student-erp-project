@@ -66,7 +66,7 @@
             
             <!-- ID (학번) -->
             <div>
-                <label for="studentId" class="block text-sm font-semibold text-gray-700 mb-1">학번 (ID)</label>
+                <label for="studentId" class="block text-sm font-semibold text-gray-700 mb-1">아이디</label>
                 <input type="text" id="studentId" name="studentId" required 
                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 transition duration-150"
                        placeholder="예: 20241234"
@@ -326,6 +326,5 @@
             fetchDepartments();
         });
     </script>
-
 </body>
 </html>

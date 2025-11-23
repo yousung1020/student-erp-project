@@ -4,6 +4,14 @@ public class DepartmentDTO {
     private int deptId;
     private String deptName;
 
+    public DepartmentDTO(int deptId, String deptName) {
+        this.deptId = deptId;
+        this.deptName = deptName;
+    }
+
+    public DepartmentDTO() {
+    }
+
     public int getDeptId() {
         return deptId;
     }

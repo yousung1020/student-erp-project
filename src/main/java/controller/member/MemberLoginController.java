@@ -1,5 +1,6 @@
 package controller.member;
 
+import dto.member.MemberInfoDTO;
 import dto.member.MemberLoginDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -35,10 +36,9 @@ public class MemberLoginController extends HttpServlet {
         boolean isLoginSuccess = memberService.login(memberLoginDTO);
 
         if (isLoginSuccess) {
-            // 로그인 성공 시 세션에 사용자 정보를 저장하고, 메인 페이지로 이동
-            HttpSession session = request.getSession();
-            session.setAttribute("loggedMemberId", memberId);
             // getContextPath(): 프로젝트 path (student-erp-project/)
+            HttpSession session = request.getSession();
+            session.setAttribute("loggedMemberId", memberLoginDTO.getMemberId());
             response.sendRedirect(request.getContextPath() + "/home");
         }
         else{
