@@ -23,6 +23,9 @@
             <span>동길님</span>
             <span>한국대학교 - 컴퓨터공학과</span>
             
+            <a href="${pageContext.request.contextPath}/member/login">로그인</a>
+            
+            <span></span>
             <!-- 새로 추가된 회원가입 링크 -->
             <a href="${pageContext.request.contextPath}/member/signup">회원가입</a>
             <!-- 링크 구분자 -->

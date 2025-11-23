@@ -13,14 +13,20 @@ import java.io.IOException;
 import dao.member.MemberDAO;
 import dto.member.MemberSignUpDTO;
 
-@WebServlet(name = "MemberController", urlPatterns = "/member/signup")
+@WebServlet(name = "MemberController", urlPatterns = "/member/*")
 public class MemberController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	
+    	String path = request.getPathInfo();
         
-        request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp").forward(request, response);
+    	if ("/signup".equals(path))
+    		request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp").forward(request, response);
+    	
+    	else if ("/login".equals(path))
+    		request.getRequestDispatcher("/WEB-INF/views/member/login.jsp").forward(request, response);
        
     }
     
