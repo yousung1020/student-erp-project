@@ -74,7 +74,7 @@
                 <input type="text" id="studentId" name="memberId" required 
                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 transition duration-150"
                        placeholder="예: abcd12"
-                       value="${param.studentId}">
+                       value="${param.memberId}">
                 
                 <!-- 🟥 ID 중복 오류 표시 (서버에서 받은 경우) -->
                 <% if (errorType != null && errorType.equals("ID_DUPLICATION")) { %>
@@ -118,7 +118,7 @@
                 <input type="text" id="name" name="memberName" required
                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 transition duration-150"
                        placeholder="이름을 입력하세요"
-                       value="${param.name}">
+                       value="${param.memberName}">
             </div>
 
             <!-- Email -->
