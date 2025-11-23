@@ -26,3 +26,4 @@ local.properties
 # Operating System generated files
 .DS_Store
 Thumbs.db
+/bin/
