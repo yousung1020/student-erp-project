@@ -44,7 +44,13 @@ public class AdminMemberController extends HttpServlet {
 			handleCreateRequest(request, response);
 		}
 		else if("update".equals(action)) {
-			handleUpdateRequest(request, response);
+			String updateType = request.getParameter("updateType");
+			if ("password".equals(updateType)) {
+				handlePasswordUpdateRequest(request, response);
+			}
+			else if ("department".equals(updateType)) {
+				handleDepartmentUpdateRequest(request, response);
+			}
 		}
 		else if("delete".equals(action)) {
 			handleDeleteRequest(request, response);
@@ -72,7 +78,8 @@ public class AdminMemberController extends HttpServlet {
 			AdminMemberDetailDTO memberDetail = memberService.getMemberDetail(memberId);
 			
 			request.setAttribute("memberDetail", memberDetail);
-			
+			List<DeptDTO> deptList = memberService.getAllDepartments(); 
+	        request.setAttribute("departmentList", deptList);
 			request.getRequestDispatcher("/WEB-INF/views/admin/user_detail.jsp").forward(request,response);
 		} catch (MemberNotFoundException e) {
 			request.setAttribute("error", e.getMessage());
@@ -115,7 +122,7 @@ public class AdminMemberController extends HttpServlet {
         }
 	}
 	
-	private void handleUpdateRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void handlePasswordUpdateRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		AdminMemberUpdateDTO updateDto = new AdminMemberUpdateDTO();
         updateDto.setMemberId(request.getParameter("memberId"));
         updateDto.setNewPassword(request.getParameter("newPassword"));
@@ -123,10 +130,10 @@ public class AdminMemberController extends HttpServlet {
         try {
         	boolean success = memberService.updatePassword(updateDto);
         	if (success) {
-        		response.sendRedirect("user-manage?action=detail&memberId=" + updateDto.getMemberId() + "&message=updateSuccess");
+        		response.sendRedirect("user-manage?action=detail&memberId=" + updateDto.getMemberId() + "&message=passwordUpdateSuccess");
         	}
         	else {
-        		response.sendRedirect("user-manage?action=detail&memberId=" + updateDto.getMemberId() + "&error=updateFailed");
+        		response.sendRedirect("user-manage?action=detail&memberId=" + updateDto.getMemberId() + "&error=passwordUpdateFailed");
         	}
         } catch (MemberNotFoundException e) {
         	response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
@@ -134,7 +141,25 @@ public class AdminMemberController extends HttpServlet {
         	response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "비밀번호 수정 중 서버 오류 발생");
         }
 	}
-	
+	private void handleDepartmentUpdateRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		AdminMemberUpdateDTO updateDto = new AdminMemberUpdateDTO();
+        updateDto.setMemberId(request.getParameter("memberId"));
+        updateDto.setDepartmentId(Integer.parseInt(request.getParameter("newDeptId")));
+        
+        try {
+        	boolean success = memberService.updateDepartmentId(updateDto);
+        	if (success) {
+        		response.sendRedirect("user-manage?action=detail&memberId=" + updateDto.getMemberId() + "&message=departmentUpdateSuccess");
+        	}
+        	else {
+        		response.sendRedirect("user-manage?action=detail&memberId=" + updateDto.getMemberId() + "&error=departmentUpdateFailed");
+        	}
+        } catch (MemberNotFoundException e) {
+        	response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        } catch (Exception e) {
+        	response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "학과 ID 수정 중 서버 오류 발생");
+        }
+	}
 	private void handleDeleteRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		AdminMemberDeleteDTO deleteDto = new AdminMemberDeleteDTO();
         deleteDto.setMemberId(request.getParameter("memberId"));

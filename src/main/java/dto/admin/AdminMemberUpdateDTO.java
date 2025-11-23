@@ -3,6 +3,13 @@ package dto.admin;
 public class AdminMemberUpdateDTO {
 	private String memberId;
 	private String newPassword;
+	private Integer departmentId;
+	public Integer getDepartmentId() {
+		return departmentId;
+	}
+	public void setDepartmentId(Integer departmentId) {
+		this.departmentId = departmentId;
+	}
 	public String getMemberId() {
 		return memberId;
 	}

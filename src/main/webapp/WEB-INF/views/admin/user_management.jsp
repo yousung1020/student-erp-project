@@ -29,7 +29,7 @@
                     <th>ID</th>
                     <th>이름</th>
                     <th>이메일</th>
-                    <th>부서 ID</th>
+                    <th>학과 ID</th>
                     <th>관리</th>
                 </tr>
             </thead>
@@ -83,24 +83,21 @@
     </div>
     
     <div>
-        <label for="deptId">부서:</label>
+        <label for="deptId">학과:</label>
         <select id="deptId" name="deptId" required>
-            <option value="">부서를 선택하세요</option>
-            <c:if test="${not empty deptList}">
+            <option value="">학과를 선택하세요</option>
                 <c:forEach var="dept" items="${deptList}">
                     <option value="${dept.deptId}">
                         <c:out value="${dept.deptName}" />
                     </option>
                 </c:forEach>
-            </c:if>
-            <c:if test="${empty deptList}">
-                <option value="" disabled>부서 목록 없음</option>
-            </c:if>
         </select>
     </div>
     
     <button type="submit">회원 등록</button>
 </form>
+
+<a href="Logout">로그인 페이지로 돌아가기</a>
 
 </body>
 </html>
