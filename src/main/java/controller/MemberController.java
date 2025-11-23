@@ -54,9 +54,10 @@ public class MemberController extends HttpServlet {
         
         // 2. 폼 데이터(파라미터) 받기
         // *주의: 파라미터 이름(name="")이 signup.jsp의 폼 입력 필드와 일치해야 합니다.
-        String studentId = request.getParameter("studentId");
-        String password = request.getParameter("password");
-        String name = request.getParameter("name");
+        String memberId = request.getParameter("memberId");
+        String memberPassword = request.getParameter("memberPassword");
+        String passwordConfirm = request.getParameter("passwordConfirm");
+        String memberName = request.getParameter("memberName");
         String memberEmail = request.getParameter("memberEmail");
         
         int departmentId = 0;
@@ -76,9 +77,9 @@ public class MemberController extends HttpServlet {
         
         //3. JDBC
         MemberSignUpDTO signUpDTO = new MemberSignUpDTO(
-                studentId, 
-                password, 
-                name, 
+        		memberId, 
+                memberPassword, 
+                memberName, 
                 memberEmail, 
                 departmentId
             );
@@ -93,7 +94,7 @@ public class MemberController extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/member/login");
         } else {
         	// ID 중복 오류 체크
-            if (memberService.isIdExists(studentId)) { 
+            if (memberService.isIdExists(memberId)) { 
                 request.setAttribute("errorType", "ID_DUPLICATION");
                 request.setAttribute("errorMessage", "입력하신 학번은 이미 사용 중입니다.");
             } else {

@@ -68,12 +68,12 @@
 
         <form action="${pageContext.request.contextPath}/member/signup" method="post" class="space-y-6" id="signupForm">
             
-            <!-- ID (학번) -->
+            <!-- ID -->
             <div>
-                <label for="studentId" class="block text-sm font-semibold text-gray-700 mb-1">학번 (ID)</label>
-                <input type="text" id="studentId" name="studentId" required 
+                <label for="studentId" class="block text-sm font-semibold text-gray-700 mb-1">아이디 (ID)</label>
+                <input type="text" id="studentId" name="memberId" required 
                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 transition duration-150"
-                       placeholder="예: 20241234"
+                       placeholder="예: abcd12"
                        value="${param.studentId}">
                 
                 <!-- 🟥 ID 중복 오류 표시 (서버에서 받은 경우) -->
@@ -90,7 +90,7 @@
             <!-- 비밀번호 필드는 보안 및 브라우저 기본 동작 때문에 값을 유지하지 않는 것이 일반적입니다. -->
             <div>
                 <label for="password" class="block text-sm font-semibold text-gray-700 mb-1">비밀번호</label>
-                <input type="password" id="password" name="password" required
+                <input type="password" id="password" name="memberPassword" required
                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 transition duration-150"
                        placeholder="비밀번호를 입력하세요">
             </div>
@@ -108,7 +108,7 @@
             <!-- 이름 -->
             <div>
                 <label for="name" class="block text-sm font-semibold text-gray-700 mb-1">이름</label>
-                <input type="text" id="name" name="name" required
+                <input type="text" id="name" name="memberName" required
                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 transition duration-150"
                        placeholder="이름을 입력하세요"
                        value="${param.name}">
