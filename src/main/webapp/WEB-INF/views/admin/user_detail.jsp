@@ -4,8 +4,21 @@
 <html>
 <head>
     <title>회원 상세 및 수정</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 <body>
+
+<c:if test="${not empty error}">
+    <p style="color: red;">🚨 오류 발생: ${error}</p>
+</c:if>
+<c:if test="${not empty param.message}">
+    <p style="color: green;">✅ 메시지: ${param.message}</p>
+</c:if>
+<c:if test="${not empty param.error}">
+    <p style="color: red;">❌ 오류: ${param.error}</p>
+</c:if>
     <h2>회원 상세 정보</h2>
     
     <c:if test="${not empty memberDetail}">
@@ -47,5 +60,11 @@
         <button type="submit">학과 수정</button>
     </form>
     <a href="user-manage?action=list">회원 목록으로</a>
+    
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#newDeptId').select2();
+        });
+    </script>
 </body>
 </html>
