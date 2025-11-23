@@ -6,24 +6,40 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import service.department.DepartmentService;
 import service.MemberService;
 
 import java.io.IOException;
+import java.util.List;
 
 import dao.member.MemberDAO;
+import dto.department.DepartmentDTO;
 import dto.member.MemberSignUpDTO;
 
 @WebServlet(name = "MemberController", urlPatterns = "/member/*")
 public class MemberController extends HttpServlet {
 
+	private final DepartmentService departmentService = new DepartmentService();
+	
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	
     	String path = request.getPathInfo();
         
-    	if ("/signup".equals(path))
-    		request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp").forward(request, response);
+    	if ("/signup".equals(path)) {
+    		try {
+                // 전체 학과 목록 조회
+                List<DepartmentDTO> departments = departmentService.deptFindAll();
+
+                // 학과 정보를 jsp 페이지로 포워드
+                request.setAttribute("departments", departments);
+                request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp").forward(request, response);
+            } catch (Exception e) {
+                request.setAttribute("error", "오류가 발생했습니다: " + e.getMessage());
+                request.getRequestDispatcher("/WEB-INF/views/admin/error.jsp").forward(request, response);
+            }
+    	}
     	
     	else if ("/login".equals(path))
     		request.getRequestDispatcher("/WEB-INF/views/member/login.jsp").forward(request, response);
@@ -42,10 +58,9 @@ public class MemberController extends HttpServlet {
         String password = request.getParameter("password");
         String name = request.getParameter("name");
         String memberEmail = request.getParameter("memberEmail");
-        String department = request.getParameter("department");
         
         int departmentId = 0;
-        String departmentParam = request.getParameter("department");
+        String departmentParam = request.getParameter("deptId");
         
         try {
             if (departmentParam != null && !departmentParam.isEmpty()) {
@@ -55,8 +70,7 @@ public class MemberController extends HttpServlet {
             // 숫자로 변환할 수 없는 값이 넘어온 경우 (예: 사용자가 직접 문자를 입력하고 선택 안 한 경우)
             System.err.println("[Controller Error] 학과 ID 파라미터가 유효한 숫자가 아닙니다: " + departmentParam);
             request.setAttribute("errorMessage", "유효하지 않은 학과 정보가 제출되었습니다. 목록에서 다시 선택해주세요.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp");
-            dispatcher.forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp").forward(request, response);
             return;
         }
         
@@ -87,6 +101,14 @@ public class MemberController extends HttpServlet {
                 request.setAttribute("errorType", "DB_ERROR");
                 request.setAttribute("errorMessage", "회원가입 처리 중 시스템 오류가 발생했습니다.");
             }
+            
+            try {
+                List<DepartmentDTO> departments = departmentService.deptFindAll();
+                request.setAttribute("departments", departments);
+            } catch (Exception e) {
+                e.printStackTrace(); // 에러 로그라도 남김
+            }
+            
             request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp").forward(request, response);
         }
     }
