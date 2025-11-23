@@ -78,5 +78,16 @@
         </div>
     </div>
 
+    <form method="POST" action="${pageContext.request.contextPath}/member/login">
+        <%-- 로그인 실패 시 컨트롤러가 보낸 에러 메세지 표시 --%>
+        <c:if test="${not empty loginError}">
+            <p>${loginError}</p>
+        </c:if>
+
+        <input type="text" name="memberId" placeholder="아이디" required />
+            <input type="password" name="memberPassword" placeholder="패스워드" required />
+        <button type="submit">로그인</button>
+    </form>
+</div>
 </body>
 </html>

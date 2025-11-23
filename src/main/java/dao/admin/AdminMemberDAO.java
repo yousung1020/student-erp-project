@@ -98,7 +98,7 @@ public class AdminMemberDAO {
         return dto;
 	}
 	
-	public int updateMember(AdminMemberUpdateDTO dto) {
+	public int updatePassword(AdminMemberUpdateDTO dto) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = "UPDATE member SET member_password = ? WHERE member_id = ?";
@@ -109,6 +109,28 @@ public class AdminMemberDAO {
 	        pstmt = conn.prepareStatement(sql);
 	        
 	        pstmt.setString(1, dto.getNewPassword());
+	        pstmt.setString(2, dto.getMemberId());
+	        
+	        result = pstmt.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JdbcConnectUtil.close(conn, pstmt);
+		}
+		return result;
+	}
+	
+	public int updateDepartment(AdminMemberUpdateDTO dto) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "UPDATE member SET dept_id = ? WHERE member_id = ?";
+		int result = 0;
+		
+		try {
+			conn = JdbcConnectUtil.getConnetion();
+	        pstmt = conn.prepareStatement(sql);
+	        
+	        pstmt.setInt(1, dto.getDepartmentId());
 	        pstmt.setString(2, dto.getMemberId());
 	        
 	        result = pstmt.executeUpdate();

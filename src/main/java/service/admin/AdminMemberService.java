@@ -46,7 +46,13 @@ public class AdminMemberService {
 	}
 	
 	public boolean updatePassword(AdminMemberUpdateDTO dto) {
-		int result = adminMemberDAO.updateMember(dto);
+		int result = adminMemberDAO.updatePassword(dto);
+		
+		return result > 0;
+	}
+	
+	public boolean updateDepartmentId(AdminMemberUpdateDTO dto) {
+		int result = adminMemberDAO.updateDepartment(dto);
 		
 		return result > 0;
 	}

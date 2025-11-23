@@ -1,5 +1,7 @@
 package dao.department;
 
+import common.JdbcConnectUtil;
+import dto.department.DepartmentDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -49,5 +51,30 @@ public class DepartmentDAO {
         }
 
         return departmentList;
+public class DepartmentDAO {
+    public List<DepartmentDTO> deptFindAll() {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<DepartmentDTO> departments = new ArrayList<>();
+        String FIND_ALL_DEPT = "SELECT dept_id, dept_name FROM department;";
+
+        try {
+            conn = JdbcConnectUtil.getConnetion();
+            pstmt = conn.prepareStatement(FIND_ALL_DEPT);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                DepartmentDTO departmentDTO = new DepartmentDTO();
+                departmentDTO.setDeptId(rs.getInt("dept_id"));
+                departmentDTO.setDeptName(rs.getString("dept_name"));
+                departments.add(departmentDTO);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JdbcConnectUtil.close(conn, pstmt, rs);
+        }
+
+        return departments;
     }
 }

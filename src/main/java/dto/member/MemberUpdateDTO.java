@@ -1,11 +1,10 @@
 package dto.member;
 
-public class MemberLoginDTO {
+public class MemberUpdateDTO {
     private String memberId;
     private String memberPassword;
-
-    public MemberLoginDTO() {
-    }
+    private String memberEmail;
+    private int deptId;
 
     public String getMemberId() {
         return memberId;
@@ -21,5 +20,21 @@ public class MemberLoginDTO {
 
     public void setMemberPassword(String memberPassword) {
         this.memberPassword = memberPassword;
+    }
+
+    public String getMemberEmail() {
+        return memberEmail;
+    }
+
+    public void setMemberEmail(String memberEmail) {
+        this.memberEmail = memberEmail;
+    }
+
+    public int getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(int deptId) {
+        this.deptId = deptId;
     }
 }
