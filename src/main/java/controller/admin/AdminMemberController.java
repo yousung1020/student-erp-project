@@ -23,7 +23,7 @@ import dto.admin.DeptDTO;
 @WebServlet("/api/admin/user-manage")
 public class AdminMemberController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private AdminMemberService memberService = new AdminMemberService();
+	private final AdminMemberService memberService = new AdminMemberService();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
 		if (action == null || action.isEmpty()) {
