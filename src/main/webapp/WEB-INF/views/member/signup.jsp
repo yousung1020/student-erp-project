@@ -152,7 +152,7 @@
         
         <div class="text-center text-sm text-gray-500 pt-6 border-t border-gray-100">
             이미 계정이 있으신가요? 
-            <a href="${pageContext.request.contextPath}/login" class="text-indigo-600 hover:text-indigo-500 font-bold">로그인</a>
+            <a href="${pageContext.request.contextPath}/member/login" class="text-indigo-600 hover:text-indigo-500 font-bold">로그인</a>
         </div>
     </div>
 

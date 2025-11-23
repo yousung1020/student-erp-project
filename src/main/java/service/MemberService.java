@@ -1,8 +1,7 @@
 package service;
 
+import dao.member.MemberDAO;
 import dto.member.MemberSignUpDTO;
-
-import dao.MemberDAO;
 
 public class MemberService {
 

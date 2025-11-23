@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import dto.member.DepartmentDTO;
-import dao.DepartmentDAO;
+import dao.department.DepartmentDAO;
 
 @WebServlet(name = "DepartmentController", urlPatterns = "/api/departments")
 public class DepartmentController extends HttpServlet {

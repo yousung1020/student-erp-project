@@ -10,8 +10,8 @@ import service.MemberService;
 
 import java.io.IOException;
 
+import dao.member.MemberDAO;
 import dto.member.MemberSignUpDTO;
-import dao.MemberDAO;
 
 @WebServlet(name = "MemberController", urlPatterns = "/member/signup")
 public class MemberController extends HttpServlet {
