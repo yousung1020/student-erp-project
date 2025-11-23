@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
 import service.admin.AdminMemberService;
@@ -25,6 +27,10 @@ public class AdminMemberController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final AdminMemberService memberService = new AdminMemberService();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if (!isAdmin(request)) {
+            request.getRequestDispatcher("/WEB-INF/views/admin/error.jsp").forward(request, response);
+            return;
+        }
 		String action = request.getParameter("action");
 		if (action == null || action.isEmpty()) {
 			action = "list";
@@ -38,6 +44,11 @@ public class AdminMemberController extends HttpServlet {
 		
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if (!isAdmin(request)) {
+            request.getRequestDispatcher("/WEB-INF/views/admin/error.jsp").forward(request, response);
+            return;
+        }
+		
 		String action = request.getParameter("action");
 		
 		if("create".equals(action)) {
@@ -178,4 +189,13 @@ public class AdminMemberController extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/views/admin/error.jsp").forward(request, response);
         }
 	}
+	private boolean isAdmin(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+
+        if (session == null) {
+            return false;
+        }
+        Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
+        return isAdmin != null && isAdmin.booleanValue();
+    }
 }

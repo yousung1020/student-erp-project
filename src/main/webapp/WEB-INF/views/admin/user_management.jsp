@@ -6,6 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자 회원 관리</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 <body>
 
@@ -98,6 +101,10 @@
 </form>
 
 <a href="Logout">로그인 페이지로 돌아가기</a>
-
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#deptId').select2();
+    });
+</script>
 </body>
 </html>
