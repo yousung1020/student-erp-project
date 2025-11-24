@@ -6,8 +6,16 @@ public class MemberInfoDTO {
     private String memberEmail;
     private int deptId;
     private String deptName;
+    private boolean isAdmin;
 
-    // Getters and Setters
+    public boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
     public String getMemberId() {
         return memberId;
     }

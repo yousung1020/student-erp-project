@@ -145,7 +145,7 @@ public class MemberDAO {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         MemberInfoDTO memberInfo = null;
-        String FIND_BY_ID = "SELECT m.member_id, m.member_name, m.member_email, d.dept_id, d.dept_name "
+        String FIND_BY_ID = "SELECT m.member_id, m.member_name, m.member_email, m.is_admin, d.dept_id, d.dept_name "
                 + "FROM member m JOIN department d ON m.dept_id = d.dept_id "
                 + "WHERE m.member_id = ?";
 
@@ -162,6 +162,7 @@ public class MemberDAO {
                 memberInfo.setMemberEmail(rs.getString("member_email"));
                 memberInfo.setDeptId(rs.getInt("dept_id"));
                 memberInfo.setDeptName(rs.getString("dept_name"));
+                memberInfo.setIsAdmin(rs.getBoolean("is_admin"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
