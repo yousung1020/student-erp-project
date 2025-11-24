@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
 import service.admin.AdminMemberService;
@@ -17,6 +19,7 @@ import dto.admin.AdminMemberDetailDTO;
 import dto.admin.AdminMemberSelectDTO;
 import dto.admin.AdminMemberCreateDTO;
 import dto.admin.DeptDTO;
+import dto.member.MemberInfoDTO;
 /**
  * Servlet implementation class AdminMemberController
  */
@@ -25,6 +28,10 @@ public class AdminMemberController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final AdminMemberService memberService = new AdminMemberService();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if (!isAdmin(request)) {
+            request.getRequestDispatcher("/WEB-INF/views/admin/error.jsp").forward(request, response);
+            return;
+        }
 		String action = request.getParameter("action");
 		if (action == null || action.isEmpty()) {
 			action = "list";
@@ -38,6 +45,11 @@ public class AdminMemberController extends HttpServlet {
 		
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if (!isAdmin(request)) {
+            request.getRequestDispatcher("/WEB-INF/views/admin/error.jsp").forward(request, response);
+            return;
+        }
+		
 		String action = request.getParameter("action");
 		
 		if("create".equals(action)) {
@@ -177,5 +189,14 @@ public class AdminMemberController extends HttpServlet {
             request.setAttribute("error", "회원 삭제 중 오류 발생: " + e.getMessage());
             request.getRequestDispatcher("/WEB-INF/views/admin/error.jsp").forward(request, response);
         }
+	}
+	private boolean isAdmin(HttpServletRequest request) {
+	    Object loginMember = request.getAttribute("loginMember");
+	    if (loginMember == null || !(loginMember instanceof MemberInfoDTO)) {
+	        return false;
+	    }
+	    
+	    MemberInfoDTO checkAdmin = (MemberInfoDTO) loginMember;
+	    return checkAdmin.getIsAdmin(); 
 	}
 }

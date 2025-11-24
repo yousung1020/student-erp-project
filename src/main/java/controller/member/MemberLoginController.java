@@ -38,15 +38,16 @@ public class MemberLoginController extends HttpServlet {
         if (isLoginSuccess) {
             // getContextPath(): 프로젝트 path (student-erp-project/)
             MemberInfoDTO memberInfo = memberService.getMemberInfo(memberId);
-
+            HttpSession session = request.getSession();
+            session.setAttribute("loggedMemberId", memberLoginDTO.getMemberId());
+            
             // 해당 계정이 관리자 계정일 경우
             if(memberInfo.getIsAdmin()){
                 response.sendRedirect(request.getContextPath() + "/api/admin/user-manage");
                 return;
             }
 
-            HttpSession session = request.getSession();
-            session.setAttribute("loggedMemberId", memberLoginDTO.getMemberId());
+
             response.sendRedirect(request.getContextPath() + "/home");
         }
         else{
