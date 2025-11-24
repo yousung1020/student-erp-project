@@ -19,6 +19,7 @@ import dto.admin.AdminMemberDetailDTO;
 import dto.admin.AdminMemberSelectDTO;
 import dto.admin.AdminMemberCreateDTO;
 import dto.admin.DeptDTO;
+import dto.member.MemberInfoDTO;
 /**
  * Servlet implementation class AdminMemberController
  */
@@ -190,12 +191,12 @@ public class AdminMemberController extends HttpServlet {
         }
 	}
 	private boolean isAdmin(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-
-        if (session == null) {
-            return false;
-        }
-        Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
-        return isAdmin != null && isAdmin.booleanValue();
-    }
+	    Object loginMember = request.getAttribute("loginMember");
+	    if (loginMember == null || !(loginMember instanceof MemberInfoDTO)) {
+	        return false;
+	    }
+	    
+	    MemberInfoDTO checkAdmin = (MemberInfoDTO) loginMember;
+	    return checkAdmin.getIsAdmin(); 
+	}
 }
