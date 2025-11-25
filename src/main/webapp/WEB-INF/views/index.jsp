@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
   <section id="main">
@@ -29,62 +30,27 @@
                 <p style="color:#888;">컴퓨터공학과에 필요한 자격증을 확인하고 관리하세요.</p>
                 
                 <div class="cert-card-container">
-                    
-                    <div class="cert-card">
-                        <span class="cert-card-status">준비</span>
-                        <h4>정보처리기사</h4>
-                        <p>정보시스템의 운영, 유지보수 등의 업무를 수행하는 전문 인력 양성을 위한 국가기술자격</p>
-                        <div class="card-footer">
-                            <p style="margin-bottom:5px;">연 3회 (3월, 5월, 9월)</p>
-                            <p style="margin-bottom:15px;">합격률: 45.8%</p>
-                            <a href="#" class="detail-button">상세 정보</a>
-                        </div>
-                    </div>
-                    
-                    <div class="cert-card">
-                        <span class="cert-card-status">취득</span>
-                        <h4>AWS Certified Solutions Architect</h4>
-                        <p>Amazon Web Services 클라우드 아키텍처 설계 및 구현 능력을 인증하는 국제 자격증</p>
-                         <div class="card-footer">
-                            <p style="margin-bottom:5px;">상시</p>
-                            <p style="margin-bottom:15px;">합격률: 70%</p>
-                            <a href="#" class="detail-button">상세 정보</a>
-                        </div>
-                    </div>
-
-                     <div class="cert-card">
-                        <span class="cert-card-status">준비</span>
-                        <h4>SQLD (SQL 개발자)</h4>
-                        <p>데이터베이스와 SQL에 대한 전문 지식을 검증하는 자격증</p>
-                         <div class="card-footer">
-                            <p style="margin-bottom:5px;">연 4회</p>
-                            <p style="margin-bottom:15px;">합격률: 60%</p>
-                            <a href="#" class="detail-button">상세 정보</a>
-                        </div>
-                    </div>
-
-                    <div class="cert-card">
-                        <span class="cert-card-status" style="background-color: #fff3cd; color: #664d03;">취득</span>
-                        <h4>정보보안기사</h4>
-                        <p>정보보안 및 시스템 보안 전문가로서의 능력을 인증하는 국가기술자격</p>
-                         <div class="card-footer">
-                            <p style="margin-bottom:5px;">연 3회</p>
-                            <p style="margin-bottom:15px;">합격률: 35%</p>
-                            <a href="#" class="detail-button">상세 정보</a>
-                        </div>
-                    </div>
-
-                    <div class="cert-card">
-                        <span class="cert-card-status">준비</span>
-                        <h4>리눅스마스터</h4>
-                        <p>리눅스 시스템 관리 및 운영 능력을 검증하는 민간 자격증</p>
-                         <div class="card-footer">
-                            <p style="margin-bottom:5px;">연 4회</p>
-                            <p style="margin-bottom:15px;">합격률: 55%</p>
-                            <a href="#" class="detail-button">상세 정보</a>
-                        </div>
-                    </div>
-                    
+					<c:choose>
+						<c:when test="${not empty myCertList}">
+							<c:forEach var="cert" items="${myCertList}">
+                            <div class="cert-card">
+                                <span class="cert-card-status" style="background-color: #d1e7dd; color: #0f5132;">${cert.status}</span>
+                                
+                                <h4>${cert.certName}</h4>
+                                <p>${cert.certSummary}</p>
+                                <div class="card-footer">
+                                    <p style="margin-bottom:5px;">${cert.certTrend}</p>
+                                    <p style="margin-bottom:15px;">관련 직무: ${cert.certJob}</p>
+                                </div>
+                            </div>
+                            </c:forEach>
+						</c:when>
+						<c:otherwise>
+							<p style="text-align: center; color:#666; padding: 30px;">
+                                등록된 자격증 정보가 없습니다. 자격증을 추가하세요.
+                            </p>
+						</c:otherwise>
+					</c:choose>
                 </div>
             </div>
 
