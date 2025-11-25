@@ -36,34 +36,6 @@ public class DepartmentDAO {
         return departments;
     }
 
-    public List<DepartmentDTO> getAllDepartments() {
-        List<DepartmentDTO> departmentList = new ArrayList<>();
-        Connection con = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        String SQL_SELECT_ALL = "SELECT dept_id, dept_name FROM department ORDER BY dept_name ASC";
-
-        try {
-            con = JdbcConnectUtil.getConnetion();
-            pstmt = con.prepareStatement(SQL_SELECT_ALL);
-            rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                int deptId = rs.getInt("dept_id");
-                String deptName = rs.getString("dept_name");
-
-                departmentList.add(new DepartmentDTO(deptId, deptName));
-            }
-        } catch (SQLException e) {
-            System.err.println("[DepartmentDAO] 학과 목록 조회 중 DB 오류 발생: " + e.getMessage());
-            e.printStackTrace();
-        } finally {
-            JdbcConnectUtil.close(con, pstmt, rs);
-        }
-
-        return departmentList;
-    }
-
     public String findDeptNameById(int deptId) {
         Connection con = null;
         PreparedStatement pstmt = null;

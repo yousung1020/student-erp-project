@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -40,6 +41,9 @@
             margin-top: 4px;
         }
     </style>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 <body class="min-h-screen flex items-center justify-center">
 
@@ -64,13 +68,13 @@
 
         <form action="${pageContext.request.contextPath}/member/signup" method="post" class="space-y-6" id="signupForm">
             
-            <!-- ID (학번) -->
+            <!-- ID -->
             <div>
-                <label for="studentId" class="block text-sm font-semibold text-gray-700 mb-1">아이디</label>
-                <input type="text" id="studentId" name="studentId" required 
+                <label for="studentId" class="block text-sm font-semibold text-gray-700 mb-1">아이디 (ID)</label>
+                <input type="text" id="studentId" name="memberId" required 
                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 transition duration-150"
-                       placeholder="예: 20241234"
-                       value="${param.studentId}">
+                       placeholder="예: abcd12"
+                       value="${param.memberId}">
                 
                 <!-- 🟥 ID 중복 오류 표시 (서버에서 받은 경우) -->
                 <% if (errorType != null && errorType.equals("ID_DUPLICATION")) { %>
@@ -86,28 +90,35 @@
             <!-- 비밀번호 필드는 보안 및 브라우저 기본 동작 때문에 값을 유지하지 않는 것이 일반적입니다. -->
             <div>
                 <label for="password" class="block text-sm font-semibold text-gray-700 mb-1">비밀번호</label>
-                <input type="password" id="password" name="password" required
+                <input type="password" id="password" name="memberPassword" required
                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 transition duration-150"
                        placeholder="비밀번호를 입력하세요">
             </div>
             
             <!-- 비밀번호 확인 (보안상 유지하지 않음) -->
             <div>
-                <label for="passwordConfirm" class="block text-sm font-semibold text-gray-700 mb-1">비밀번호 확인</label>
-                <input type="password" id="passwordConfirm" name="passwordConfirm" required
-                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 transition duration-150"
-                       placeholder="다시 한번 입력하세요">
-                <!-- 🟥 비밀번호 불일치 오류 표시 (JS로 제어) -->
-                <div class="error-message" id="password-confirm-error"></div>
-            </div>
+			    <label for="passwordConfirm" class="block text-sm font-semibold text-gray-700 mb-1">비밀번호 확인</label>
+			    <input type="password" id="passwordConfirm" name="passwordConfirm" required
+			           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 transition duration-150"
+			           placeholder="다시 한번 입력하세요">
+			           
+			    <% 
+			        String errType = (String) request.getAttribute("errorType");
+			        if (errType != null && errType.equals("PASSWORD_MISMATCH")) { 
+			    %>
+			        <div class="error-message">
+			            <%= request.getAttribute("errorMessage") %>
+			        </div>
+			    <% } %>
+			</div>
 
             <!-- 이름 -->
             <div>
                 <label for="name" class="block text-sm font-semibold text-gray-700 mb-1">이름</label>
-                <input type="text" id="name" name="name" required
+                <input type="text" id="name" name="memberName" required
                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 transition duration-150"
                        placeholder="이름을 입력하세요"
-                       value="${param.name}">
+                       value="${param.memberName}">
             </div>
 
             <!-- Email -->
@@ -120,27 +131,18 @@
             </div>
 
             <!-- 학과 입력 필드 (동적 검색) -->
-            <div class="relative">
-                <label for="departmentName" class="block text-sm font-semibold text-gray-700 mb-1">학과 (검색)</label>
-                <!-- 사용자가 검색할 입력 필드 -->
-                <input type="text" id="departmentName" required
-                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 transition duration-150"
-                       placeholder="학과를 검색하거나 입력하세요"
-                       value="${param.departmentName}">
-                
-                <!-- 선택된 학과 ID를 서버에 제출하기 위한 숨겨진 필드 -->
-                <input type="hidden" id="departmentId" name="department" required value="${param.department}">
-                
-                <!-- 자동 완성 제안 목록이 표시될 영역 -->
-                <div id="department-suggestions" class="absolute w-full bg-white shadow-xl rounded-b-lg border-gray-300" style="display: none;">
-                    <!-- JavaScript로 목록이 여기에 추가됩니다. -->
-                </div>
-                <!-- 🟥 학과 선택 오류 표시 (서버에서 받은 경우) -->
-                <% if (errorType != null && errorType.equals("DEPARTMENT_ERROR")) { %>
-                    <div class="error-message">
-                        <%= errorMessage %>
-                    </div>
-                <% } %>
+            <div>
+                <label for="deptId">학과</label>
+                <%-- select 태그: 드롭다운 목록의 전체적인 틀. name="deptId"로 지정하여, 폼 제출 시 선택된 option의 value가 이 이름으로 전송됨. --%>
+                <select id="deptId" name="deptId" style="width: 100%; padding: 10px;">
+                    <c:forEach var="dept" items="${departments}">
+                        <%-- option 태그: 드롭다운의 각 항목. value에는 학과 ID, 보이는 텍스트는 학과 이름으로 설정. --%>
+                        <%-- 현재 회원의 학과와 목록의 학과가 같으면 'selected' 속성을 출력 --%>
+                        <option value="${dept.deptId}">
+                            ${dept.deptName}
+                        </option>
+                    </c:forEach>
+                </select>
             </div>
 
             <!-- 제출 버튼 -->
@@ -156,175 +158,15 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const deptInput = document.getElementById('departmentName');
-            const deptIdHidden = document.getElementById('departmentId');
-            const suggestionsContainer = document.getElementById('department-suggestions');
-            const form = document.getElementById('signupForm');
-            let allDepartments = [];
-            let currentFocus = -1;
-
-            const passwordInput = document.getElementById('password');
-            const passwordConfirmInput = document.getElementById('passwordConfirm');
-            const passwordConfirmErrorDiv = document.getElementById('password-confirm-error');
-
-            // --- 1. Client-Side Password Validation (비밀번호 불일치 체크) ---
-            function validatePasswords() {
-                // 두 필드가 모두 값이 있을 때만 비교
-                if (passwordInput.value && passwordConfirmInput.value) {
-                    if (passwordInput.value !== passwordConfirmInput.value) {
-                        passwordConfirmErrorDiv.textContent = "비밀번호가 일치하지 않습니다. 다시 확인해주세요.";
-                        return false;
-                    } else {
-                        passwordConfirmErrorDiv.textContent = "";
-                        return true;
-                    }
-                }
-                // 두 입력 필드가 모두 채워지지 않았다면, 오류 메시지를 표시하지 않고 통과
-                passwordConfirmErrorDiv.textContent = "";
-                return true;
-            }
-
-            passwordInput.addEventListener('input', validatePasswords);
-            passwordConfirmInput.addEventListener('input', validatePasswords);
-
-            // --- 2. Form Submission Validation (폼 제출 시 유효성 최종 확인) ---
-            form.addEventListener('submit', (e) => {
-                // 1) 비밀번호 일치 여부 최종 확인
-                if (!validatePasswords()) {
-                    e.preventDefault();
-                    passwordConfirmInput.focus();
-                    return;
-                }
-                
-                // 2) 학과 선택 여부 확인
-                // deptInput.value는 사용자가 눈으로 본 학과 이름 (예: "컴퓨터공학과")
-                // deptIdHidden.value는 DB에 저장될 학과 ID (예: 1, 2, 3...)
-                if (deptInput.value && !deptIdHidden.value) {
-                    e.preventDefault();
-                    // Custom Alert 대신 오류 메시지를 표시하도록 변경
-                    alert("학과를 목록에서 정확하게 선택해주세요.");
-                    deptInput.focus();
-                    return;
-                }
-
-                // 비밀번호가 일치하고 학과 ID가 설정되었으면 서버로 제출
-            });
-            
-            // --- 3. Department AJAX and Filtering Logic (학과 드롭다운/필터링) ---
-            
-            async function fetchDepartments() {
-                try {
-                    const response = await fetch('${pageContext.request.contextPath}/api/departments');
-                    if (!response.ok) {
-                        throw new Error('Failed to fetch departments: ' + response.statusText);
-                    }
-                    allDepartments = await response.json();
-                    console.log('Departments loaded:', allDepartments);
-                } catch (error) {
-                    console.error("학과 데이터를 가져오는 중 오류 발생:", error);
-                }
-            }
-
-            function filterAndDisplaySuggestions() {
-                const filter = deptInput.value.toUpperCase();
-                suggestionsContainer.innerHTML = '';
-                currentFocus = -1;
-
-                if (!filter) {
-                    suggestionsContainer.style.display = 'none';
-                    return;
-                }
-
-                let matchCount = 0;
-                allDepartments.forEach((dept) => {
-                    if (dept.deptName.toUpperCase().includes(filter)) {
-                        if (matchCount < 10) {
-                            const item = document.createElement('div');
-                            item.innerHTML = dept.deptName;
-                            item.classList.add('suggestion-item', 'hover:bg-gray-100', 'text-gray-700', 'border-b', 'border-gray-100');
-                            item.setAttribute('data-dept-id', dept.deptId);
-                            item.setAttribute('data-dept-name', dept.deptName);
-
-                            item.addEventListener('click', () => {
-                                selectSuggestion(item);
-                            });
-
-                            suggestionsContainer.appendChild(item);
-                            matchCount++;
-                        }
-                    }
-                });
-
-                suggestionsContainer.style.display = suggestionsContainer.children.length > 0 ? 'block' : 'none';
-            }
-
-            function selectSuggestion(item) {
-                const deptId = item.getAttribute('data-dept-id');
-                const deptName = item.getAttribute('data-dept-name');
-
-                deptInput.value = deptName;
-                deptIdHidden.value = deptId;
-                
-                suggestionsContainer.style.display = 'none';
-            }
-
-            deptInput.addEventListener('input', () => {
-                // 사용자가 텍스트를 입력할 때, 숨겨진 ID 값 초기화
-                deptIdHidden.value = '';
-                filterAndDisplaySuggestions();
-            });
-
-            deptInput.addEventListener('blur', () => {
-                setTimeout(() => {
-                    suggestionsContainer.style.display = 'none';
-                }, 150);
-            });
-            
-            deptInput.addEventListener('focus', () => {
-                if (deptInput.value) {
-                   filterAndDisplaySuggestions();
-                }
-            });
-            
-            // Focus 아웃 시, 검색 필드에 입력된 텍스트가 DB에 등록된 학과 이름과 일치하는지 확인
-            // (이 로직은 복잡해지므로, 일단 사용자가 목록에서 선택하도록 강제하는 것으로 유지합니다.)
-
-            // 키보드 탐색 기능 (이전 코드 유지)
-            deptInput.addEventListener("keydown", function(e) {
-                let x = suggestionsContainer.getElementsByClassName("suggestion-item");
-                if (e.key === "ArrowDown") {
-                    currentFocus++;
-                    addActive(x);
-                } else if (e.key === "ArrowUp") {
-                    currentFocus--;
-                    addActive(x);
-                } else if (e.key === "Enter") {
-                    e.preventDefault();
-                    if (currentFocus > -1) {
-                        if (x) x[currentFocus].click();
-                    }
-                }
-            });
-
-            function removeActive(x) {
-                for (let i = 0; i < x.length; i++) {
-                    x[i].classList.remove("selected", "bg-cyan-100", "font-semibold");
-                }
-            }
-
-            function addActive(x) {
-                if (!x || x.length === 0) return false;
-                removeActive(x);
-                if (currentFocus >= x.length) currentFocus = 0;
-                if (currentFocus < 0) currentFocus = (x.length - 1);
-                x[currentFocus].classList.add("selected", "bg-cyan-100", "font-semibold");
-                x[currentFocus].scrollIntoView({ block: "nearest", behavior: "smooth" });
-            }
-
-            fetchDepartments();
+    <%-- 자바스크립트 코드 블록 --%>
+    <script type="text/javascript">
+        // HTML 문서의 모든 요소가 로드된 후, 중괄호 안의 코드를 실행하라는 jQuery 문법.
+        $(document).ready(function() {
+            // $('#deptId'): id가 'deptId'인 HTML 요소를 선택.
+            // .select2(): 선택된 요소에 Select2 라이브러리의 기능을 적용하라는 명령.
+            $('#deptId').select2();
         });
     </script>
+
 </body>
 </html>

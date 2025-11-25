@@ -3,10 +3,28 @@ package service.member;
 import dao.member.MemberDAO;
 import dto.member.MemberInfoDTO;
 import dto.member.MemberLoginDTO;
+import dto.member.MemberSignUpDTO;
 import dto.member.MemberUpdateDTO;
 
 public class MemberService {
     private final MemberDAO memberDAO = new MemberDAO();
+    
+    
+    //회원가입 성공여부 반환
+    public boolean signup(MemberSignUpDTO memberDto) {     
+        // ID 중복 체크 로직
+        if (memberDAO.isIdExists(memberDto.getMemberId())) { 
+            System.err.println("[Service] 회원가입 실패: 아이디 '" + memberDto.getMemberId() + "'가 이미 존재합니다.");
+            return false;
+        }
+
+        return memberDAO.signup(memberDto);
+    }
+
+    //ID 중복 체크 로직
+    public boolean isIdExists(String memberId) {
+        return memberDAO.isIdExists(memberId);
+    }
 
     // 로그인을 위한 비즈니스 로직
     public boolean login(MemberLoginDTO mdto) {
