@@ -101,20 +101,20 @@ public class MemberDAO {
         ResultSet rs = null;
         int result = 0;
         // 비밀번호 유무에 따른 동적 쿼리를 생성하기 위해 StringBuilder 객체 사용
-        StringBuilder updateMemberBuiler = new StringBuilder("UPDATE member SET member_email = ? ");
+        StringBuilder updateMemberBuilder = new StringBuilder("UPDATE member SET member_email = ? ");
 
         boolean isExistPassword = mdto.getMemberPassword() != null;
 
         // 패스워드가 존재할 때만 update
         if (isExistPassword) {
-            updateMemberBuiler.append(", member_password = ? ");
+            updateMemberBuilder.append(", member_password = ? ");
         }
 
-        updateMemberBuiler.append(", dept_id = ? WHERE member_id = ?; ");
+        updateMemberBuilder.append(", dept_id = ? WHERE member_id = ?; ");
 
         try {
             conn = JdbcConnectUtil.getConnetion();
-            pstmt = conn.prepareStatement(updateMemberBuiler.toString());
+            pstmt = conn.prepareStatement(updateMemberBuilder.toString());
             // PreparedStatement의 파라미터 인덱스 (비밀번호 유무에 따른 동적 업데이트를 위함)
             int paramIndex = 1;
 
