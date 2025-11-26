@@ -1,6 +1,6 @@
 package controller.certificate;
 
-import dto.certificate.CertificateDTO;
+import dto.certificate.MemberCertificateDTO;
 import service.certificate.CertificateService;
 import dto.member.MemberInfoDTO;
 import jakarta.servlet.ServletException;
@@ -21,7 +21,7 @@ public class CertListServlet extends HttpServlet {
 		if (loginMember != null) {
 			String memberId = loginMember.getMemberId();
 			try {
-				List<CertificateDTO> myCertList = certificateService.getCertificates(memberId);
+				List<MemberCertificateDTO> myCertList = certificateService.getCertificates(memberId);
 				request.setAttribute("myCertList", myCertList);
 			} catch (Exception e) {
 				e.printStackTrace();
