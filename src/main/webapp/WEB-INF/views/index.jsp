@@ -17,71 +17,20 @@
         
         <input type="radio" name="sub-tab" id="sub-tab-my-certs" class="tab-radio" checked>
         <input type="radio" name="sub-tab" id="sub-tab-search-certs" class="tab-radio">
+        <input type="radio" name="sub-tab" id="sub-tab-add-cert" class="tab-radio">
 
         <div id="cert-mgmt-sub-content">
         
             <div class="sub-tab-group">
                 <label for="sub-tab-my-certs" class="sub-tab-label">내 자격증</label>
                 <label for="sub-tab-search-certs" class="sub-tab-label">자격증 검색</label>
-                <button class="add-cert-btn">+ 자격증 추가</button>
+                <label for="sub-tab-add-cert" class="sub-tab-label">+ 자격증 추가</label>
             </div>
             <c:choose>
             	<c:when test="${not empty loginMember}">
-            	<div id="my-certs-list" class="internal-content">
-                	<p style="color:#888;">"${loginMember.deptName}"에 필요한 자격증을 확인하고 관리하세요.</p>
-                
-                	<div class="cert-card-container">
-						<c:choose>
-							<c:when test="${not empty myCertList}">
-								<c:forEach var="cert" items="${myCertList}">
-                            	<div class="cert-card">
-                                	<h4>${cert.certName}</h4>
-                                	<p>${cert.certSummary}</p>
-                                	<div class="card-footer">
-                                    	<p style="margin-bottom:5px;">취득 일자 : ${cert.certDate}</p>
-                                	</div>
-                            	</div>
-                            	</c:forEach>
-							</c:when>
-							<c:otherwise>
-								<p style="text-align: center; color:#666; padding: 30px;">
-                                	등록된 자격증 정보가 없습니다. 자격증을 추가하세요.
-                            	</p>
-							</c:otherwise>
-						</c:choose>
-                	</div>
-            	</div>
-
-            	<div id="cert-search-area" class="internal-content">
-                	<div class="search-input-group">
-                    	<input type="text" placeholder="자격증 이름을 검색하세요 (예: 정보처리기사, ADsP)">
-                    	<button>🔍 검색</button>
-                	</div>
-                
-                	<div id="search-results-list">
-                    	<p style="margin-bottom: 20px;">'정보' 검색 결과 (임시) | 총 2건의 자격증을 찾았습니다.</p>
-                    
-                    	<div class="cert-card-container">
-                        	<div class="cert-card">
-                            	<span class="search-result-tag">국가기술</span>
-                            	<h4>정보처리기사</h4>
-                            	<p>컴퓨터 시스템 개발 및 운용에 필요한 전문 지식을 검증합니다.</p>
-                            	<div class="card-footer">
-                                	<a href="#" class="detail-button" style="background-color: #1a73e8;">내 자격증에 추가</a>
-                            	</div>
-                        	</div>
-
-                        	<div class="cert-card">
-                            	<span class="search-result-tag">국가기술</span>
-                            	<h4>정보보안기사</h4>
-                            	<p>시스템 및 네트워크 보안 전문가로서의 능력을 인증합니다.</p>
-                            	<div class="card-footer">
-                                	<a href="#" class="detail-button" style="background-color: #1a73e8;">내 자격증에 추가</a>
-                            	</div>
-                        	</div>
-                    	</div>
-                	</div>
-            	</div>
+                    <jsp:include page="/WEB-INF/views/main/my_certificates.jsp" />
+                    <jsp:include page="/WEB-INF/views/main/certificate_search.jsp" />
+                    <jsp:include page="/WEB-INF/views/main/add_certificate_form.jsp" />
 				</c:when>
             	<c:otherwise>
             		<p style="text-align: center; color:#666; padding: 30px;">
