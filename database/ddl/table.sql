@@ -53,6 +53,7 @@ CREATE TABLE IF NOT EXISTS member_certificate (
   `member_cert_id` int AUTO_INCREMENT NOT NULL,
   `member_id` VARCHAR(45) NOT NULL,
   `cert_id` INT NOT NULL,
+  `cert_date` DATE NOT NULL,
   PRIMARY KEY (`member_cert_id`),
   INDEX `fk_member_has_certificate_certificate1_idx` (`cert_id` ASC),
   INDEX `fk_member_has_certificate_member1_idx` (`member_id` ASC),

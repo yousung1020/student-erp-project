@@ -11,7 +11,7 @@
   
   <div id="top-footer-placeholder">
     <div id="top-footer-content">
-        <p>개발자: 동길 포트폴리오 팀</p>
+        <p>개발팀: Team CHK</p>
     </div>
   </div>
   <header>
