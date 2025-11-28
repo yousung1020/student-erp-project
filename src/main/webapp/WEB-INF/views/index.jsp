@@ -18,19 +18,22 @@
         <input type="radio" name="sub-tab" id="sub-tab-my-certs" class="tab-radio" checked>
         <input type="radio" name="sub-tab" id="sub-tab-search-certs" class="tab-radio">
         <input type="radio" name="sub-tab" id="sub-tab-add-cert" class="tab-radio">
-
+		<input type="radio" name="sub-tab" id="sub-tab-recommend-certs" class="tab-radio">
         <div id="cert-mgmt-sub-content">
         
             <div class="sub-tab-group">
                 <label for="sub-tab-my-certs" class="sub-tab-label">내 자격증</label>
                 <label for="sub-tab-search-certs" class="sub-tab-label">자격증 검색</label>
+                <label for="sub-tab-recommend-certs" class="sub-tab-label">추천 자격증</label>
                 <label for="sub-tab-add-cert" class="sub-tab-label">+ 자격증 추가</label>
             </div>
             <c:choose>
             	<c:when test="${not empty loginMember}">
-                    <jsp:include page="/WEB-INF/views/main/my_certificates.jsp" />            
-                    <jsp:include page="/WEB-INF/views/main/certificate_search.jsp" />   
-                	<jsp:include page="/WEB-INF/views/main/add_certificate_form.jsp" />
+                    <jsp:include page="/WEB-INF/views/main/my_certificates.jsp" />
+                    <jsp:include page="/WEB-INF/views/main/certificate_search.jsp" />
+                    <jsp:include page="/WEB-INF/views/main/recommend_certificates.jsp"/>
+                    <jsp:include page="/WEB-INF/views/main/add_certificate_form.jsp" />
+
 				</c:when>
             	<c:otherwise>
             		<p style="text-align: center; color:#666; padding: 30px;">
@@ -38,8 +41,10 @@
                     </p>
             	</c:otherwise>
 			</c:choose>
-        </div> </div>
-        <div id="job-postings-content" class="content-section">
+        </div>
+    </div>
+        
+    <div id="job-postings-content" class="content-section">
     	<h2>🏢 자격증 기반 채용 공고 검색</h2>
     
     	<div id="job-search-input-area" class="search-input-group">
