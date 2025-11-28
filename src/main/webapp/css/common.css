@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /* ================================================= */
-/* === [핵심] CSS 탭 기법 기본 설정 === */
+/* === [핵심] CSS 탭 기법 기본 설정 (추천 자격증 탭 추가됨) === */
 /* ================================================= */
 
 /* 기존 레이아웃을 사용하지 않기 위해 main 섹션 하위 요소들을 재정의 */
@@ -28,15 +28,18 @@
 #tab-cert-mgmt:checked ~ #cert-mgmt-content { display: block; }
 #tab-job-postings:checked ~ #job-postings-content { display: block; }
 
-/* 내부 자격증 목록/검색/추가 영역 기본 숨김 */
-#content-my-certs, #content-search-certs, #content-add-cert { /* JSP에서 포함된 div ID 사용 */
+/* 내부 자격증 목록/검색/추가 영역 기본 숨김 (추천 자격증 콘텐츠 ID 필요) */
+/* (참고: recommend_certificates.jsp가 포함될 div의 ID가 없으므로 임시로 #content-recommend-certs 로 가정합니다. */
+/* JSP에서 <div id="content-recommend-certs" class="internal-content"> 로 감싸주세요. */
+#content-my-certs, #content-search-certs, #content-recommend-certs, #content-add-cert { 
     display: none;
     padding-top: 15px;
 }
 
-/* 내부 탭 표시 로직 */
+/* 내부 탭 표시 로직 (추천 자격증 탭 로직 추가됨) */
 #sub-tab-my-certs:checked ~ #cert-mgmt-sub-content #content-my-certs { display: block; }
 #sub-tab-search-certs:checked ~ #cert-mgmt-sub-content #content-search-certs { display: block; }
+#sub-tab-recommend-certs:checked ~ #cert-mgmt-sub-content #content-recommend-certs { display: block; } /* 🌟 추가됨 */
 #sub-tab-add-cert:checked ~ #cert-mgmt-sub-content #content-add-cert { display: block; }
 
 
@@ -140,23 +143,23 @@
     cursor: pointer;
     font-size: 14px;
 }
-/* 내부 탭: 선택된 상태 */
+/* 내부 탭: 선택된 상태 (추천 자격증 탭 로직 추가됨) */
 #sub-tab-my-certs:checked ~ #cert-mgmt-sub-content .sub-tab-group .sub-tab-label[for='sub-tab-my-certs'],
 #sub-tab-search-certs:checked ~ #cert-mgmt-sub-content .sub-tab-group .sub-tab-label[for='sub-tab-search-certs'],
+#sub-tab-recommend-certs:checked ~ #cert-mgmt-sub-content .sub-tab-group .sub-tab-label[for='sub-tab-recommend-certs'], /* 🌟 추가됨 */
 #sub-tab-add-cert:checked ~ #cert-mgmt-sub-content .sub-tab-group .sub-tab-label[for='sub-tab-add-cert'] {
     background-color: #1a73e8;
     color: white;
     border-color: #1a73e8;
 }
 
-/* 🌟 수정된 부분: 자격증 추가 라벨을 우측 끝으로 이동 🌟 */
+/* 🌟 '자격증 추가' 라벨만 우측 끝으로 이동 🌟 */
 .sub-tab-group .sub-tab-label[for='sub-tab-add-cert'] {
     margin-left: auto; /* 우측 끝으로 이동 */
     /* 기본 스타일 재정의 방지 */
     background-color: #e0e0e0; 
     border: 1px solid #ccc;
 }
-/* 참고: .add-cert-btn 클래스는 사용되지 않아 제거했습니다. */
 
 /* --- 자격증 카드 스타일 --- */
 .cert-card-container {
