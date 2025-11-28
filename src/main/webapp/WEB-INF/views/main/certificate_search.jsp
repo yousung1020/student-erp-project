@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<div id="cert-search-area" class="internal-content">
+<div id="content-search-certs" class="internal-content">
     <div class="search-input-group">
         <input type="text" placeholder="자격증 이름을 검색하세요 (예: 정보처리기사, ADsP)">
         <button>🔍 검색</button>

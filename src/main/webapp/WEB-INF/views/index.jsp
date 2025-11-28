@@ -28,9 +28,9 @@
             </div>
             <c:choose>
             	<c:when test="${not empty loginMember}">
-                    <jsp:include page="/WEB-INF/views/main/my_certificates.jsp" />
-                    <jsp:include page="/WEB-INF/views/main/certificate_search.jsp" />
-                    <jsp:include page="/WEB-INF/views/main/add_certificate_form.jsp" />
+                    <jsp:include page="/WEB-INF/views/main/my_certificates.jsp" />            
+                    <jsp:include page="/WEB-INF/views/main/certificate_search.jsp" />   
+                	<jsp:include page="/WEB-INF/views/main/add_certificate_form.jsp" />
 				</c:when>
             	<c:otherwise>
             		<p style="text-align: center; color:#666; padding: 30px;">

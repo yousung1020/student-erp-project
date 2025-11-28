@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%-- "자격증 추가" 폼 섹션 --%>
-<div id="add-cert-area" class="internal-content">
+<div id="content-add-cert" class="internal-content">
     <form action="${pageContext.request.contextPath}/certificate/add" method="POST">
         <h3>새 자격증 추가</h3>
         <div class="form-group">
