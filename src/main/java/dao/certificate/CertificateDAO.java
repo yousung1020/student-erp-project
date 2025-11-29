@@ -8,8 +8,34 @@ import common.JdbcConnectUtil;
 import dto.certificate.CertificateDTO;
 import dto.certificate.MemberCertificateDTO;
 import dto.department.DepartmentDTO;
+import dto.member.MemberSignUpDTO;
 
 public class CertificateDAO {
+	
+	public boolean addCert(MemberCertificateDTO mdto) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String SQL_ADDCERT = "INSERT INTO member_certificate(member_id, cert_id, cert_date) VALUES(?, ?, ?)";
+		
+		int result = 0;
+		try {
+			con = JdbcConnectUtil.getConnetion();
+			
+			pstmt = con.prepareStatement(SQL_ADDCERT);
+			
+			pstmt.setString(1, mdto.getMemberId());
+			pstmt.setInt(2, mdto.getCertId());
+			pstmt.setDate(3, new java.sql.Date(mdto.getCertDate().getTime()));
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JdbcConnectUtil.close(con, pstmt);
+		}
+		
+		return result > 0;
+	}
 	
 	public List<CertificateDTO> certFindAll() {
 		Connection conn = null;

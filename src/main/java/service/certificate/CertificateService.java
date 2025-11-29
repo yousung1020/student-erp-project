@@ -9,10 +9,12 @@ import dto.certificate.MemberCertificateDTO;
 public class CertificateService {
 	private final CertificateDAO certificateDAO = new CertificateDAO();
 	
+	public boolean addCert(MemberCertificateDTO mdto) {
+		return certificateDAO.addCert(mdto);
+	}
+	
 	public List<CertificateDTO> certFindAll(){
-		
 		List<CertificateDTO> certificates = certificateDAO.certFindAll();
-		
 		return certificates;
 	}
 	

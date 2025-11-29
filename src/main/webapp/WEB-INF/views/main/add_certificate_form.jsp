@@ -24,13 +24,6 @@
             <label for="acquisitionDate">취득일</label>
             <input type="date" id="acquisitionDate" name="acquisitionDate">
         </div>
-        <div class="form-group">
-            <label for="status">상태</label>
-            <select id="status" name="status">
-                <option value="취득">취득</option>
-                <option value="준비">준비</option>
-            </select>
-        </div>
         <button type="submit">추가하기</button>
     </form>
 </div>
@@ -38,8 +31,6 @@
 <script type="text/javascript">
     // HTML 문서의 모든 요소가 로드된 후, 중괄호 안의 코드를 실행하라는 jQuery 문법.
     $(document).ready(function() {
-        // $('#deptId'): id가 'deptId'인 HTML 요소를 선택.
-        // .select2(): 선택된 요소에 Select2 라이브러리의 기능을 적용하라는 명령.
         $('#certId').select2();
     });
 </script>
