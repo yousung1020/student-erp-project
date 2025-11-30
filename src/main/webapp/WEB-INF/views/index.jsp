@@ -1,5 +1,23 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<head>
+    <style>
+        /* 모든 탭 컨텐츠를 기본적으로 숨김 */
+        #cert-mgmt-sub-content .internal-content {
+            display: none;
+        }
+        /* 체크된 라디오 버튼에 연결된 탭 컨텐츠만 보여줌 */
+        #sub-tab-my-certs:checked ~ #cert-mgmt-sub-content #my-certs-list {
+            display: block;
+        }
+        #sub-tab-search-certs:checked ~ #cert-mgmt-sub-content #cert-search-area {
+            display: block;
+        }
+        #sub-tab-add-cert:checked ~ #cert-mgmt-sub-content #add-cert-area {
+            display: block;
+        }
+    </style>
+</head>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
   <section id="main">

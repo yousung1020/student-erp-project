@@ -3,9 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title> 학과별 자격증 & 취업 정보 </title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/common.css">
+    <meta charset="UTF-8">
+    <title> 학과별 자격증 & 취업 정보 </title>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/common.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
   

@@ -1,32 +1,21 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<div id="content-search-certs" class="internal-content">
+<div id="cert-search-area" class="internal-content">
     <div class="search-input-group">
-        <input type="text" placeholder="자격증 이름을 검색하세요 (예: 정보처리기사, ADsP)">
-        <button>🔍 검색</button>
+        <input type="text" id="cert-search-input" placeholder="자격증 이름을 검색하세요 (예: 정보처리기사)">
+        <%-- 검색 버튼에 id 추가 --%>
+        <button type="button" id="cert-search-button">🔍 검색</button>
     </div>
-
+    
+    <%-- 검색 결과가 동적으로 표시될 영역 --%>
     <div id="search-results-list">
-        <p style="margin-bottom: 20px;">'정보' 검색 결과 (임시) | 총 2건의 자격증을 찾았습니다.</p>
-
-        <div class="cert-card-container">
-            <div class="cert-card">
-                <span class="search-result-tag">국가기술</span>
-                <h4>정보처리기사</h4>
-                <p>컴퓨터 시스템 개발 및 운용에 필요한 전문 지식을 검증합니다.</p>
-                <div class="card-footer">
-                    <a href="#" class="detail-button" style="background-color: #1a73e8;">내 자격증에 추가</a>
-                </div>
-            </div>
-
-            <div class="cert-card">
-                <span class="search-result-tag">국가기술</span>
-                <h4>정보보안기사</h4>
-                <p>시스템 및 네트워크 보안 전문가로서의 능력을 인증합니다.</p>
-                <div class="card-footer">
-                    <a href="#" class="detail-button" style="background-color: #1a73e8;">내 자격증에 추가</a>
-                </div>
-            </div>
-        </div>
+        <%-- 초기에는 비워둠 --%>
     </div>
 </div>
+
+<%-- JS 파일 로드를 위한 contextPath 변수 선언 --%>
+<script>
+    var contextPath = "${pageContext.request.contextPath}";
+    console.log(contextPath);
+</script>
+<script src="${pageContext.request.contextPath}/js/certificate/certificate-search.js"></script>
