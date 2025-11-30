@@ -1,5 +1,6 @@
 package controller.certificate;
 
+import dto.certificate.CertificateDTO;
 import dto.certificate.MemberCertificateDTO;
 import service.certificate.CertificateService;
 import dto.member.MemberInfoDTO;
@@ -17,10 +18,13 @@ public class CertListServlet extends HttpServlet {
 	private final CertificateService certificateService = new CertificateService();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		MemberInfoDTO loginMember = (MemberInfoDTO) request.getAttribute("loginMember");
 		if (loginMember != null) {
 			String memberId = loginMember.getMemberId();
 			try {
+				List<CertificateDTO> certificates = certificateService.certFindAll();
+				request.setAttribute("certificates", certificates);
 				List<MemberCertificateDTO> myCertList = certificateService.getCertificates(memberId);
 				request.setAttribute("myCertList", myCertList);
 			} catch (Exception e) {
