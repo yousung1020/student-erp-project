@@ -17,6 +17,7 @@ public class HomeController extends HttpServlet {
             throws ServletException, IOException {
         // 여기에 사전에 필요한 기능 정의
     	request.getRequestDispatcher("/cert/list").include(request, response);
+    	request.getRequestDispatcher("/major/info").include(request, response);
         request.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(request, response);
     }
 }
