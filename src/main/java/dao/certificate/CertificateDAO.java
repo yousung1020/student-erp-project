@@ -4,12 +4,8 @@ import dto.certificate.CertificateDTO;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
 import common.JdbcConnectUtil;
-import dto.certificate.CertificateDTO;
 import dto.certificate.MemberCertificateDTO;
-import dto.department.DepartmentDTO;
-import dto.member.MemberSignUpDTO;
 
 public class CertificateDAO {
 
@@ -37,6 +33,8 @@ public class CertificateDAO {
                 dto.setMemberId(rs.getString("member_id"));
                 dto.setCertId(rs.getInt("cert_id"));
                 dto.setCertDate(rs.getDate("cert_date"));
+                dto.setCertName(rs.getString("cert_name"));
+                dto.setCertSummary(rs.getString("cert_summary"));
                 list.add(dto);
             }
         } catch (Exception e) {

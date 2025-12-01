@@ -44,13 +44,11 @@
         %>
 
         <form action="${pageContext.request.contextPath}/member/login" method="post" class="space-y-6">
-            
-            <!-- ID (학번) -->
             <div>
-                <label for="studentId" class="block text-sm font-semibold text-gray-700 mb-1">학번 (ID)</label>
+                <label for="studentId" class="block text-sm font-semibold text-gray-700 mb-1">ID</label>
                 <input type="text" id="studentId" name="memberId" required
                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 transition duration-150"
-                       placeholder="학번을 입력하세요"
+                       placeholder="아이디를 입력하세요"
                        value="${param.studentId}">
             </div>
 

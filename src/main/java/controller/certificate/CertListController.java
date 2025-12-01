@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/cert/list")
-public class CertListServlet extends HttpServlet {
+public class CertListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final CertificateService certificateService = new CertificateService();
 	

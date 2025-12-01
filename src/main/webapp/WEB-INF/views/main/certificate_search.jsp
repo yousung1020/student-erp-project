@@ -15,7 +15,7 @@
 
 <%-- JS 파일 로드를 위한 contextPath 변수 선언 --%>
 <script>
-    var contextPath = "${pageContext.request.contextPath}";
+    const contextPath = "${pageContext.request.contextPath}";
     console.log(contextPath);
 </script>
 <script src="${pageContext.request.contextPath}/js/certificate/certificate-search.js"></script>

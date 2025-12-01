@@ -5,17 +5,13 @@ $(document).ready(function() {
         let resultsContainer = $('#search-results-list');
 
         if (keyword.length > 0) {
-            console.log("Searching for keyword:", keyword);
-
             $.ajax({
                 url: contextPath + '/api/certificates/search',
                 type: 'GET',
                 data: { certKeyword: keyword },
                 dataType: 'json',
                 success: function(data) {
-                    console.log("Data received:", data);
                     resultsContainer.empty();
-
                     if (data.length > 0) {
                         let resultHtml = `<p style="margin-bottom: 20px;">'${keyword}' 검색 결과 | 총 ${data.length}건의 자격증을 찾았습니다.</p>`;
                         resultHtml += '<div class="cert-card-container">';
@@ -28,7 +24,11 @@ $(document).ready(function() {
                                     <h4>${cert.certName}</h4>
                                     <p>${summary}</p>
                                     <div class="card-footer">
-                                        <a href="#" class="detail-button" style="background-color: #1a73e8;">내 자격증에 추가</a>
+                                
+                                        <a href="#" class="detail-button add-my-cert-button" 
+                                           style="background-color: #1a73e8;"
+                                           data-cert-id="${cert.certId}"
+                                           data-cert-name="${cert.certName}">내 자격증에 추가</a>
                                     </div>
                                 </div>
                             `;
@@ -48,21 +48,34 @@ $(document).ready(function() {
         }
     }
 
-    // '검색' 버튼 클릭 시 검색 실행
-    $(document).on('click', '#cert-search-button', function() {
-        executeSearch();
-    });
-
-    // 검색 input에서 엔터 키를 눌렀을 때 검색 실행
+    // '검색' 버튼 클릭 및 엔터 키 이벤트
+    $(document).on('click', '#cert-search-button', executeSearch);
     $('#cert-search-input').on('keyup', function(event) {
         if (event.key === 'Enter' || event.keyCode === 13) {
             executeSearch();
         }
     });
 
-    // --- 다른 탭을 클릭했을 때, 검색 결과를 지우는 로직 추가 ---
+    // 다른 탭 클릭 시 검색 결과 초기화
     $('label[for="sub-tab-my-certs"], label[for="sub-tab-add-cert"]').on('click', function() {
-        $('#search-results-list').empty(); // 결과 목록 비우기
-        $('#cert-search-input').val(''); // 검색창 입력값 비우기
+        $('#search-results-list').empty();
+        $('#cert-search-input').val('');
+    });
+
+    // "내 자격증에 추가" 버튼 클릭 이벤트 핸들러
+    $(document).on('click', '.add-my-cert-button', function(e) {
+        e.preventDefault();
+
+        let certId = $(this).data('cert-id');
+        let certName = $(this).data('cert-name');
+
+        // '자격증 추가' 탭으로 전환
+        $('#sub-tab-add-cert').prop('checked', true);
+
+        // Select2 드롭다운의 값을 변경하고, 화면에 반영되도록 'change' 이벤트를 발생시킴
+        $('#add-cert-id').val(certId).trigger('change');
+        
+        // (선택사항) 폼으로 스크롤
+        document.getElementById('add-cert-area').scrollIntoView({ behavior: 'smooth' });
     });
 });

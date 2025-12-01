@@ -12,7 +12,7 @@ import java.io.IOException;
 import dto.certificate.MemberCertificateDTO;
 
 @WebServlet("/certificate/add")
-public class CertAddServlet extends HttpServlet {
+public class CertAddController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -35,9 +35,7 @@ public class CertAddServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/home");
             return;
         }
-        
-        
-        
+
         MemberCertificateDTO memCertDTO = new MemberCertificateDTO();
         memCertDTO.setMemberId(memberId);
         memCertDTO.setCertId(certificateId);
@@ -57,8 +55,6 @@ public class CertAddServlet extends HttpServlet {
         	response.sendRedirect(request.getContextPath() + "/home");
             return;
         }
-        
-        
         CertificateService certificateService = new CertificateService();
         boolean isSuccess = certificateService.addCert(memCertDTO);
         if (isSuccess) {
@@ -67,11 +63,6 @@ public class CertAddServlet extends HttpServlet {
         	request.setAttribute("errorMessage", "자격증 추가 중 시스템 오류가 발생했습니다.");
         	response.sendRedirect(request.getContextPath() + "/home");
         }
-        
-        
-		
-		
-		
 	}
 
 }

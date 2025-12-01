@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/major/info")
-public class MajorInfoServlet extends HttpServlet {
+public class MajorInfoController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	private final MajorInfoService majorInfoService = new MajorInfoService();
