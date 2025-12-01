@@ -27,17 +27,8 @@ public class MajorInfoDAO {
         
         URI uri = new URI(apiUrl);
         URL url = uri.toURL();
-        StringBuilder xmlResponse = new StringBuilder();
         
         try (InputStream xmlStream = url.openStream()) {
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(xmlStream, StandardCharsets.UTF_8))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    xmlResponse.append(line).append("\n");
-                }
-            }
-            InputStream parsedStream = new ByteArrayInputStream(xmlResponse.toString().getBytes(StandardCharsets.UTF_8));
-            
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(parsedStream);
