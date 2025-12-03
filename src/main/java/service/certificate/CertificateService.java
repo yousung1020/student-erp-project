@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dao.certificate.CertificateDAO;
-import dto.certificate.CertificateDTO;
 import dto.certificate.MemberCertificateDTO;
 
 public class CertificateService {

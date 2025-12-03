@@ -6,7 +6,6 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import service.department.DepartmentService;
 import service.member.MemberService;
 
 // 모든 요청과 응답에 대해 UTF-8 인코딩을 강제하는 필터

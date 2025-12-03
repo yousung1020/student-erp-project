@@ -98,7 +98,6 @@ public class MemberDAO {
     public int memberUpdate(MemberUpdateDTO mdto) {
         Connection conn = null;
         PreparedStatement pstmt = null;
-        ResultSet rs = null;
         int result = 0;
         // 비밀번호 유무에 따른 동적 쿼리를 생성하기 위해 StringBuilder 객체 사용
         StringBuilder updateMemberBuilder = new StringBuilder("UPDATE member SET member_email = ? ");

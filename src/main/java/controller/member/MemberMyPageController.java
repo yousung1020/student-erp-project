@@ -3,7 +3,6 @@ package controller.member;
 import dto.department.DepartmentDTO;
 import dto.member.MemberInfoDTO;
 import dto.member.MemberUpdateDTO;
-import exception.member.MemberNotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

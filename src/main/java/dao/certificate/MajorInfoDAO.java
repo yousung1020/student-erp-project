@@ -11,10 +11,6 @@ import javax.xml.xpath.XPathFactory;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URI;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.io.ByteArrayInputStream;
 public class MajorInfoDAO {
 
     private static final String API_KEY = "1c1092e86b977fcc94d62ae9688c9896";
@@ -31,7 +27,7 @@ public class MajorInfoDAO {
         try (InputStream xmlStream = url.openStream()) {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(parsedStream);
+            Document doc = builder.parse(xmlStream);
             XPath xpath = XPathFactory.newInstance().newXPath();
 
             MajorInfoDTO dto = new MajorInfoDTO();
