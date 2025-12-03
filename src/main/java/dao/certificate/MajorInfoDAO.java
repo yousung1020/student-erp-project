@@ -31,7 +31,7 @@ public class MajorInfoDAO {
         try (InputStream xmlStream = url.openStream()) {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(parsedStream);
+            Document doc = builder.parse(xmlStream);
             XPath xpath = XPathFactory.newInstance().newXPath();
 
             MajorInfoDTO dto = new MajorInfoDTO();
