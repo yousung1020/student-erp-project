@@ -63,17 +63,17 @@ public class AdminCertificateController extends HttpServlet{
     
     private void handleUpdateRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         AdminCertificateDTO updatedCert = createCertFromRequest(request);
-        
+        int certId = updatedCert.getCertId();
         try {
             boolean success = certService.updateCertificate(updatedCert);
             
             if (success) {
-                response.sendRedirect("cert-manage?action=list&message=updateSuccess");
+                response.sendRedirect("cert-manage?action=list&message=updateSuccess&certId=" + certId);
             } else {
-                response.sendRedirect("cert-manage?action=list&error=updateFailed");
+                response.sendRedirect("cert-manage?action=list&error=updateFailed&certId="+certId);
             }
         } catch (Exception e) {
-            response.sendRedirect("cert-manage?action=list&error=updateError");
+            response.sendRedirect("cert-manage?action=list&error=updateError&certId="+certId);
         }
     }
     

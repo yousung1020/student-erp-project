@@ -153,6 +153,7 @@
             const editRow = document.getElementById('edit-form-' + certId);
             if (editRow) {
                 editRow.style.display = 'table-row';
+                editRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }
     };
