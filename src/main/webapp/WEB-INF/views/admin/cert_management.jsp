@@ -11,15 +11,29 @@
     table { border-collapse: collapse; width: 100%; margin-top: 15px; }
     th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
     th { background-color: #f2f2f2; }
-    textarea { width: 98%; height: 60px; resize: vertical; } 
+    textarea { width: 98%; height: 60px; resize: vertical; }
     .message { color: green; font-weight: bold; margin-bottom: 10px; }
     .error { color: red; font-weight: bold; margin-bottom: 10px; }
     .edit-row { background-color: #fffacd; }
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .admin-link {
+        font-size: 14px;
+        white-space: nowrap;
+    }
 </style>
 </head>
 <body>
 
-<h2>📚 자격증 관리 통합 페이지</h2>
+<div class="header-container">
+    <h2>📚 자격증 관리 통합 페이지</h2>
+    <span class="admin-link">
+        <a href="user-manage">👥 회원 관리 페이지로 이동하기</a>
+    </span>
+</div>
 <hr>
 
 <c:if test="${not empty message}">
