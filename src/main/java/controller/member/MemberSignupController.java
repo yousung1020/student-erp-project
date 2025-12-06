@@ -41,7 +41,6 @@ public class MemberSignupController extends HttpServlet {
         String memberPassword = request.getParameter("memberPassword");
         String passwordConfirm = request.getParameter("passwordConfirm");
         String memberName = request.getParameter("memberName");
-        //String memberEmail = request.getParameter("memberEmail");
         
         String emailLocal = request.getParameter("emailLocal");
         String emailDomain = request.getParameter("emailDomain");
