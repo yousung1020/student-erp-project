@@ -8,6 +8,55 @@ import common.JdbcConnectUtil;
 import dto.certificate.MemberCertificateDTO;
 
 public class CertificateDAO {
+	
+	public boolean existsCert(String member_id, int cert_id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		boolean exists = false;
+		String SQL_SELECT = "SELECT COUNT(*) FROM member_certificate WHERE member_id = ? AND cert_id = ?";
+		
+		try {
+			conn = JdbcConnectUtil.getConnetion();
+			pstmt = conn.prepareStatement(SQL_SELECT);
+			pstmt.setString(1, member_id);
+			pstmt.setInt(2, cert_id);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				exists = rs.getInt(1) > 0;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JdbcConnectUtil.close(conn, pstmt, rs);
+		}
+		
+		return exists;
+	}
+	
+	public boolean updateCert(MemberCertificateDTO mdto) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		String SQL_UPDATE = "UPDATE member_certificate SET cert_date = ? WHERE member_id = ? AND cert_id = ?";
+		try {
+			conn = JdbcConnectUtil.getConnetion();
+			pstmt = conn.prepareStatement(SQL_UPDATE);
+			pstmt.setDate(1, new java.sql.Date(mdto.getCertDate().getTime()));
+			pstmt.setString(2, mdto.getMemberId());
+			pstmt.setInt(3, mdto.getCertId());
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JdbcConnectUtil.close(conn, pstmt);
+		}
+		
+		return true;
+	}
 
     public List<MemberCertificateDTO> memberCertificates(String memberId) {
         List<MemberCertificateDTO> list = new ArrayList<>();
