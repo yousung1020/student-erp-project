@@ -54,9 +54,6 @@ public class MemberSignupController extends HttpServlet {
         String emailRegex = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$";
 
         if (!emailLocal.matches(emailRegex)) {
-        	System.out.println(emailLocal);
-        	System.out.println(emailDomain);
-        	System.out.println(emailSelect);
         	request.setAttribute("errorType", "email_miss");
             request.setAttribute("errorMessage", "올바른 이메일 형식이 아닙니다.");
             try {
