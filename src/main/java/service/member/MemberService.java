@@ -9,6 +9,10 @@ import dto.member.MemberUpdateDTO;
 public class MemberService {
     private final MemberDAO memberDAO = new MemberDAO();
     
+    //회원탈퇴 로직
+    public boolean memberDelete(String memberId) {
+    	return memberDAO.memberDelete(memberId);
+    }
     
     //회원가입 성공여부 반환
     public boolean signup(MemberSignUpDTO memberDto) {     
