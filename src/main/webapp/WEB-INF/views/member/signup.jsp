@@ -123,12 +123,46 @@
 
             <!-- Email -->
             <div>
-                <label for="memberEmail" class="block text-sm font-semibold text-gray-700 mb-1">이메일</label>
-                <input type="email" id="memberEmail" name="memberEmail" required
-                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 transition duration-150"
-                       placeholder="예: example@university.ac.kr"
-                       value="${param.memberEmail}">
-            </div>
+			    <label class="block text-sm font-semibold text-gray-700 mb-1">이메일</label>
+			
+			    <div class="flex gap-2 items-center">
+			
+			        <!-- 이메일 아이디 -->
+			        <input type="text" id="emailLocal" name="emailLocal"
+			               class="w-1/3 px-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600"
+			               placeholder="example">
+			
+			        <span class="text-gray-700">@</span>
+			
+			        <!-- 이메일 도메인 -->
+			        <input type="text" id="emailDomain" name="emailDomain"
+			               class="w-1/3 px-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600"
+			               placeholder="domain.com"
+			               disabled>
+			
+			        <!-- 도메인 선택 -->
+			        <select id="emailSelect" name="emailSelect"
+			                class="w-1/3 px-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600"
+			                onchange="email_check()">
+			            <option value="">선택하세요</option>
+			            <option value="direct">직접입력</option>
+			            <option value="naver.com">naver.com</option>
+			            <option value="hanmail.net">hanmail.net</option>
+			            <option value="daum.net">daum.net</option>
+			            <option value="nate.com">nate.com</option>
+			            <option value="samsung.com">samsung.com</option>
+			            <option value="gmail.com">gmail.com</option>
+			        </select>
+			    </div>
+			    
+			    <% 
+			        if (errType != null && errType.equals("email_miss")) { 
+			    %>
+			        <div class="error-message">
+			            <%= request.getAttribute("errorMessage") %>
+			        </div>
+			    <% } %>
+			</div>
 
             <!-- 학과 입력 필드 (동적 검색) -->
             <div>
@@ -167,6 +201,21 @@
             $('#deptId').select2();
         });
     </script>
+    <script>
+    	function email_check() {
+	        const select = document.getElementById("emailSelect");
+	        const domain = document.getElementById("emailDomain");
+	
+	        if (select.value === "direct") {
+	            domain.disabled = false;
+	            domain.value = "";
+	            domain.focus();
+	        } else {
+	            domain.disabled = true;
+	            domain.value = select.value;
+	        }
+	    }
+	</script>
 
 </body>
 </html>
