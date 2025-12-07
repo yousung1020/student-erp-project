@@ -99,7 +99,9 @@
     
     <button type="submit">회원 등록</button>
 </form>
-
+<hr> <a href="cert-manage" style="display:inline-block; margin-right: 15px; padding: 10px 15px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+    📚 자격증 관리 페이지로 이동
+</a>
 <a href="Logout">로그인 페이지로 돌아가기</a>
 <script type="text/javascript">
     $(document).ready(function() {
