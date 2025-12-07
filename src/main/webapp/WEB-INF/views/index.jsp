@@ -62,6 +62,8 @@
         </div>
     </div>
         
+    <jsp:include page="/WEB-INF/views/main/job_postings.jsp" />
+  </section> 
     <div id="job-postings-content" class="content-section">
     	<h2>🏢 자격증 기반 채용 공고 검색</h2>
     
