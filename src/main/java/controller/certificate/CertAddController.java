@@ -56,7 +56,7 @@ public class CertAddController extends HttpServlet {
             return;
         }
         CertificateService certificateService = new CertificateService();
-        boolean isSuccess = certificateService.addCert(memCertDTO);
+        boolean isSuccess = certificateService.upsertCert(memCertDTO);
         if (isSuccess) {
         	response.sendRedirect(request.getContextPath() + "/home");
         } else {

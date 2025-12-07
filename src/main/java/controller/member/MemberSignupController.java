@@ -41,7 +41,29 @@ public class MemberSignupController extends HttpServlet {
         String memberPassword = request.getParameter("memberPassword");
         String passwordConfirm = request.getParameter("passwordConfirm");
         String memberName = request.getParameter("memberName");
-        String memberEmail = request.getParameter("memberEmail");
+        
+        String emailLocal = request.getParameter("emailLocal");
+        String emailDomain = request.getParameter("emailDomain");
+        String emailSelect = request.getParameter("emailSelect");
+        if ("direct".equals(emailSelect)) {
+        	emailLocal += "@" + emailDomain;
+        } else
+        	emailLocal += "@" + emailSelect;
+        
+        String emailRegex = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$";
+
+        if (!emailLocal.matches(emailRegex)) {
+        	request.setAttribute("errorType", "email_miss");
+            request.setAttribute("errorMessage", "올바른 이메일 형식이 아닙니다.");
+            try {
+                List<DepartmentDTO> departments = departmentService.deptFindAll();
+                request.setAttribute("departments", departments);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp").forward(request, response);
+            return;
+        }
         
         if (memberPassword == null || !memberPassword.equals(passwordConfirm)) {
             request.setAttribute("errorType", "PASSWORD_MISMATCH");
@@ -77,7 +99,7 @@ public class MemberSignupController extends HttpServlet {
         		memberId, 
                 memberPassword, 
                 memberName, 
-                memberEmail, 
+                emailLocal, 
                 departmentId
             );
   		
