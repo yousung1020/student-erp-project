@@ -11,6 +11,26 @@ import java.sql.SQLException;
 import dto.member.MemberSignUpDTO;
 
 public class MemberDAO {
+	
+	public boolean memberDelete(String memberId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String SQL_DELETE = "DELETE FROM member WHERE member_id = ?";
+		
+		try {
+			con = JdbcConnectUtil.getConnetion();
+			pstmt = con.prepareStatement(SQL_DELETE);
+			pstmt.setString(1, memberId);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			JdbcConnectUtil.close(con, pstmt);
+		}
+		return true;
+	}
+	
 	//id 중복 확인 -> 중복이면 true
     public boolean isIdExists(String memberId) {
         Connection con = null;

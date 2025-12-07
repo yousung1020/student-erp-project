@@ -69,6 +69,9 @@
                 <button type="submit">정보 수정</button>
             </div>
         </form>
+        <form action="${pageContext.request.contextPath}/member/delete" method="POST" onsubmit="return confirm('정말 탈퇴하시겠습니까?');">
+        	<button type="submit">회원 탈퇴</button>
+        </form>
     </div>
 
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />

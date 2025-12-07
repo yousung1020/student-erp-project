@@ -6,7 +6,7 @@
               <h4>사이트 탐색</h4>
               <ul>
                   <li><a href="${pageContext.request.contextPath}/home">📄 자격증 관리</a></li>
-                  <li><a href="${pageContext.request.contextPath}/home">🏢 채용 공고</a></li>
+                  <li><a href="${pageContext.request.contextPath}/home?tab=job-postings">🏢 채용 공고</a></li> 
                   <li><a href="${pageContext.request.contextPath}/home">FAQ / 문의</a></li>
               </ul>
           </div>

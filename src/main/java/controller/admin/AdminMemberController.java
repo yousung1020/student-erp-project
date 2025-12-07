@@ -19,9 +19,7 @@ import dto.admin.AdminMemberSelectDTO;
 import dto.admin.AdminMemberCreateDTO;
 import dto.admin.DeptDTO;
 import dto.member.MemberInfoDTO;
-/**
- * Servlet implementation class AdminMemberController
- */
+
 @WebServlet("/api/admin/user-manage")
 public class AdminMemberController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
