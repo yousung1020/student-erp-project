@@ -1,8 +1,8 @@
 package service.certificate;
 
 import dto.certificate.JobPostingDTO;
+import dto.certificate.JobPostingResDTO;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -12,8 +12,13 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class JobPostingService {
-    public List<JobPostingDTO> searchJobPostings(String keyword, int page) throws IOException {
+public class JobSearchService {
+    public static void main(String[] args) throws IOException {
+        JobSearchService jobPostingService = new JobSearchService();
+        JobPostingResDTO a = jobPostingService.searchJobPostings("정보처리기사", 1);
+    }
+
+    public JobPostingResDTO searchJobPostings(String keyword, int page) throws IOException {
         String encodedKeyword = URLEncoder.encode(keyword, StandardCharsets.UTF_8);
 
         StringBuilder urlBuilder = new StringBuilder("https://www.jobkorea.co.kr/Search?stext=");
@@ -32,13 +37,12 @@ public class JobPostingService {
 
         if (jobListContainer == null) {
             System.out.println("채용 공고 목록 컨테이너가 업33");
-            // 빈 리스트 반환
-            return jobList;
+            // 빈 dto 반환
+            return new JobPostingResDTO();
         }
 
         // 이것도 마찬가지
         Elements postings = jobListContainer.select("div[data-sentry-component=\"CardJob\"]");
-        System.out.println("해당 페이지에서의 공고 글 수: " + postings.size());
 
         for (Element post:  postings) {
             JobPostingDTO jobPostingDTO = new JobPostingDTO();
@@ -72,15 +76,26 @@ public class JobPostingService {
             jobList.add(jobPostingDTO);
         }
 
-        for(JobPostingDTO jobPostingDTO:jobList){
-            System.out.println(jobPostingDTO.getTitle());
-            System.out.println(jobPostingDTO.getCompanyName());
-            System.out.println(jobPostingDTO.getUrl());
-            System.out.println(jobPostingDTO.getLocation());
-            System.out.println(jobPostingDTO.getField());
-        }
+        // 해당 자격증으로 공고를 검색했을시 총 몇 건의 공고 글이 있는지 여부
+        int totalJobPostings = Integer.parseInt(
+                doc.select("div[data-sentry-component=\"JobList\"]").select("span[data-sentry-element=\"Typography\"]").get(1).text().replace(",", "")
+        );
 
-        System.out.println(jobList.size());
-        return jobList;
+        // 한 페이지에 20건씩 공고글이 있기 때문에 20개를 기준으로 페이징 할 예정 (ceil은 소수점 올림으로, 예를 들어 21건에 데이터가 있다고 하면 2페이지이므로, 21/20 한 결과에서 소수점 부분을 올려줘야 함)
+        int totalPages = (int) Math.ceil((double) totalJobPostings / 20);
+
+        // 페이징 정보가 포함된 응답 dto 설정
+        JobPostingResDTO jobPostingResDTO = new JobPostingResDTO();
+        jobPostingResDTO.setJobList(jobList);
+        jobPostingResDTO.setTotalJobPostings(totalJobPostings);
+        jobPostingResDTO.setTotalPages(totalPages);
+        jobPostingResDTO.setCurrentPage(page);
+
+        System.out.println("해당 페이지의 공고 글 수: " + jobPostingResDTO.getJobList().size());
+        System.out.println("총 공고 글 수: " + jobPostingResDTO.getTotalJobPostings());
+        System.out.println("현재 페이지: " + jobPostingResDTO.getCurrentPage());
+        System.out.println("총 페이지: " + jobPostingResDTO.getTotalPages());
+        System.out.println("-----------------------------------");
+        return jobPostingResDTO;
     }
 }
