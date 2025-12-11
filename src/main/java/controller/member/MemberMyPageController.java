@@ -55,7 +55,7 @@ public class MemberMyPageController extends HttpServlet {
 
     // 회원 정보가 수정될 때
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession(false);
 
         if (session == null || session.getAttribute("loggedMemberId") == null) {
@@ -69,8 +69,29 @@ public class MemberMyPageController extends HttpServlet {
 
         memberUpdateDTO.setMemberId(loggedMemberId);
         memberUpdateDTO.setMemberPassword(request.getParameter("memberPassword"));
-        memberUpdateDTO.setMemberEmail(request.getParameter("memberEmail"));
         memberUpdateDTO.setDeptId(Integer.parseInt(request.getParameter("deptId")));
+        String emailLocal = request.getParameter("emailLocal");
+        String emailDomain = request.getParameter("emailDomain");
+        String emailSelect = request.getParameter("emailSelect");
+        if ("direct".equals(emailSelect)) {
+        	emailLocal += "@" + emailDomain;
+        } else
+        	emailLocal += "@" + emailSelect;
+        
+        String emailRegex = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$";
+
+        if (!emailLocal.matches(emailRegex)) {
+        	request.setAttribute("errorType", "email_miss");
+            request.setAttribute("errorMessage", "올바른 이메일 형식이 아닙니다.");
+            String msg = "올바른 이메일 형식이 아닙니다.";
+            String encodedMsg = URLEncoder.encode(msg, "UTF-8");
+            response.sendRedirect(
+            	    request.getContextPath()
+            	    + "/member/my-page?status=fail&errorType=email_miss&errorMessage=" + encodedMsg
+            	);
+            return;
+        }
+        memberUpdateDTO.setMemberEmail(emailLocal);
 
         boolean isSuccess = memberService.updateMember(memberUpdateDTO);
 
