@@ -8,10 +8,27 @@
         flex-wrap: wrap; /* 카드가 넘치면 다음 줄로 이동 */
         gap: 20px; /* 카드 사이의 간격 */
     }
-    /* 각 카드의 너비를 50%에서 간격의 절반만큼 빼서 정확히 2열로 만듦 */
     .job-card-container .job-card {
         width: calc(50% - 10px);
-        box-sizing: border-box; /* 패딩과 테두리를 너비에 포함 */
+        box-sizing: border-box; 
+        
+        display: block;          
+        text-decoration: none;   
+        color: inherit;          
+        cursor: pointer;         
+        
+        
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        background-color: #fff;
+        transition: box-shadow 0.2s, transform 0.2s;
+    }
+    
+    .job-card-container .job-card:hover {
+        background-color: #fff;  
+        
+        border: 1px solid #007bff;
     }
     /* 페이지네이션 UI 스타일 */
     .pagination {
@@ -36,6 +53,33 @@
     .pagination span {
         border: none;
     }
+    
+    .job-card h4 {
+    	margin-bottom: 10px;
+        margin-top: 10px;
+        margin-left: 10px;
+        color: black;
+        font-weight: bold;
+        font-size: 1.2em;
+    }
+    
+    .job-card p {
+        font-size: 1.05em; 
+        margin-top: 0;     
+        margin-left: 10px;
+        margin-bottom: 5px;
+    }
+    
+    .job-card .card-footer p {
+        display: inline-block;
+        background-color: #f0f0f0;
+        color: #555;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.9em;
+        margin: 0;
+    }
+    
 </style>
 
 <div id="job-postings-content" class="content-section">
@@ -57,13 +101,13 @@
             
             <div class="job-card-container">
                 <c:forEach var="job" items="${jobSearchResult.jobList}">
-                    <div class="job-card">
-                        <h4><a href="${job.url}" target="_blank" title="새 창에서 열기">${job.title}</a></h4>
+                    <a href="${job.url}" target="_blank" title="새 창에서 열기" class="job-card">
+                        <h4>${job.title}</h4>
                         <p>${job.companyName}</p>
                         <div class="card-footer">
                             <p>${job.field}</p>
                         </div>
-                    </div>
+                    </a>
                 </c:forEach>
             </div>
             
