@@ -9,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/adminuser.css">
 </head>
 <body>
 
@@ -22,7 +23,7 @@
     <p style="color: red;">❌ 오류: ${param.error}</p>
 </c:if>
 
-## 👥 회원 목록
+👥 회원 목록
 
 <c:choose>
     <c:when test="${not empty memberList}">
@@ -63,7 +64,7 @@
 
 <hr>
 
-## ➕ 회원 등록 폼
+회원 등록 폼
 
 <form action="user-manage" method="post">
     <input type="hidden" name="action" value="create">
@@ -99,10 +100,13 @@
     
     <button type="submit">회원 등록</button>
 </form>
-<hr> <a href="cert-manage" style="display:inline-block; margin-right: 15px; padding: 10px 15px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
-    📚 자격증 관리 페이지로 이동
-</a>
-<a href="Logout">로그인 페이지로 돌아가기</a>
+<hr>
+<div class="link-button-group">
+	<a href="cert-manage" style="display:inline-block; margin-right: 15px; padding: 10px 15px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+    	📚 자격증 관리 페이지로 이동
+	</a>
+	<a href="Logout">로그인 페이지로 돌아가기</a>
+</div>
 <script type="text/javascript">
     $(document).ready(function() {
         $('#deptId').select2();
