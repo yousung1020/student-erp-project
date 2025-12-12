@@ -15,13 +15,14 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <%-- Select2 라이브러리의 기능(JavaScript) 파일 로드 --%>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
     <%-- 공통 헤더와 푸터 include --%>
     <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
-    <div>
-        <h1>내 정보 수정</h1>
+    <div class="max-w-xl mx-auto mt-10 p-8 bg-white rounded-xl shadow-lg space-y-6">
+        <h1 class="text-2xl font-bold text-gray-800">내 정보 수정</h1>
         
         <%-- param: URL의 파라미터(쿼리스트링) 값을 가져오는 EL 내장 객체. 예: /mypage?status=success 의 'status' 값을 가져옴. --%>
         <c:if test="${param.status == 'success'}">
@@ -35,46 +36,99 @@
             <p style="color: red;">${error}</p>
         </c:if>
 
-        <form action="${pageContext.request.contextPath}/member/my-page" method="POST">
-            <div>
-                <label for="memberId">아이디</label>
-                <input type="text" id="memberId" name="memberId" value="${memberInfo.memberId}" readonly>
-            </div>
-            <div>
-                <label for="memberName">이름</label>
-                <input type="text" id="memberName" name="memberName" value="${memberInfo.memberName}" readonly>
-            </div>
-            <div>
-                <label for="memberEmail">이메일</label>
-                <input type="email" id="memberEmail" name="memberEmail" value="${memberInfo.memberEmail}">
-            </div>
-            <div>
-                <label for="deptId">학과</label>
-                <%-- select 태그: 드롭다운 목록의 전체적인 틀. name="deptId"로 지정하여, 폼 제출 시 선택된 option의 value가 이 이름으로 전송됨. --%>
-                <select id="deptId" name="deptId" style="width: 100%; padding: 10px;">
-                    <c:forEach var="dept" items="${departments}">
-                        <%-- option 태그: 드롭다운의 각 항목. value에는 학과 ID, 보이는 텍스트는 학과 이름으로 설정. --%>
-                        <%-- 현재 회원의 학과와 목록의 학과가 같으면 'selected' 속성을 출력 --%>
-                        <option value="${dept.deptId}" ${memberInfo.deptId == dept.deptId ? 'selected' : ''}>
-                            ${dept.deptName}
-                        </option>
-                    </c:forEach>
-                </select>
-            </div>
-            <div>
-                <label for="memberPassword">새 비밀번호</label>
-                <input type="password" id="memberPassword" name="memberPassword" placeholder="변경할 비밀번호 (비워두면 변경 안됨)">
-            </div>
-            <div>
-                <button type="submit">정보 수정</button>
-            </div>
-        </form>
-        <form action="${pageContext.request.contextPath}/member/delete" method="POST" onsubmit="return confirm('정말 탈퇴하시겠습니까?');">
-        	<button type="submit">회원 탈퇴</button>
-        </form>
-    </div>
+        <form action="${pageContext.request.contextPath}/member/my-page" method="POST" class="space-y-4">
 
-    <jsp:include page="/WEB-INF/views/common/footer.jsp" />
+        <div>
+            <label for="memberId" class="block text-sm font-medium text-gray-700">아이디</label>
+            <input type="text" id="memberId" name="memberId" 
+                   value="${memberInfo.memberId}" readonly
+                   class="w-full px-4 py-2 mt-1 border rounded-lg bg-gray-100 cursor-not-allowed">
+        </div>
+
+        <div>
+            <label for="memberName" class="block text-sm font-medium text-gray-700">이름</label>
+            <input type="text" id="memberName" name="memberName"
+                   value="${memberInfo.memberName}" readonly
+                   class="w-full px-4 py-2 mt-1 border rounded-lg bg-gray-100 cursor-not-allowed">
+        </div>
+
+        <div>
+		    <label for="memberEmail" class="block text-sm font-medium text-gray-700">이메일</label>
+		
+		    <div class="flex gap-2 items-center">
+		
+		        <!-- 이메일 아이디 -->
+		        <input type="text" id="emailLocal" name="emailLocal"
+		               value="${memberInfo.memberEmail.substring(0, memberInfo.memberEmail.indexOf('@'))}"
+		               class="w-1/3 px-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600"
+		               placeholder="example">
+		
+		        <span class="text-gray-700">@</span>
+		
+		        <!-- 이메일 도메인 -->
+		        <input type="text" id="emailDomain" name="emailDomain"
+		               value="${memberInfo.memberEmail.substring(memberInfo.memberEmail.indexOf('@') + 1)}"
+		               class="w-1/3 px-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600"
+		               placeholder="domain.com">
+		
+		        <!-- 도메인 선택 -->
+		        <select id="emailSelect" name="emailSelect"
+		                class="w-1/3 px-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600"
+		                onchange="email_check()">
+		            <option value="direct">직접입력</option>
+		            <option value="naver.com">naver.com</option>
+		            <option value="hanmail.net">hanmail.net</option>
+		            <option value="daum.net">daum.net</option>
+		            <option value="nate.com">nate.com</option>
+		            <option value="samsung.com">samsung.com</option>
+		            <option value="gmail.com">gmail.com</option>
+		        </select>
+		    </div>
+		    <c:if test="${param.errorType == 'email_miss'}">
+			    <div class="text-red-500 text-sm font-medium mt-1">
+			        ${param.errorMessage}
+			    </div>
+			</c:if>
+
+		</div>
+
+        <div>
+            <label for="deptId" class="block text-sm font-medium text-gray-700">학과</label>
+            <select id="deptId" name="deptId"
+                    class="w-full px-4 py-2 mt-1 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+                <c:forEach var="dept" items="${departments}">
+                    <option value="${dept.deptId}" ${memberInfo.deptId == dept.deptId ? 'selected' : ''}>
+                        ${dept.deptName}
+                    </option>
+                </c:forEach>
+            </select>
+        </div>
+
+        <div>
+            <label for="memberPassword" class="block text-sm font-medium text-gray-700">새 비밀번호</label>
+            <input type="password" id="memberPassword" name="memberPassword"
+                   placeholder="변경할 비밀번호 (비워두면 변경 안됨)"
+                   class="w-full px-4 py-2 mt-1 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+        </div>
+
+        <button type="submit"
+                class="w-full py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition">
+            정보 수정
+        </button>
+
+    </form>
+
+    <!-- 회원 탈퇴 버튼 -->
+    <form action="${pageContext.request.contextPath}/member/delete" method="POST"
+          onsubmit="return confirm('정말 탈퇴하시겠습니까?');">
+
+        <button type="submit"
+                class="w-full mt-2 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition">
+            회원 탈퇴
+        </button>
+
+    </form>
+    </div>
 
     <%-- 자바스크립트 코드 블록 --%>
     <script type="text/javascript">
@@ -85,5 +139,21 @@
             $('#deptId').select2();
         });
     </script>
+    
+    <script>
+    	function email_check() {
+	        const select = document.getElementById("emailSelect");
+	        const domain = document.getElementById("emailDomain");
+	
+	        if (select.value === "direct") {
+	            domain.readOnly = false;
+	            domain.value = "";
+	            domain.focus();
+	        } else {
+	            domain.readOnly = true;
+	            domain.value = select.value;
+	        }
+	    }
+	</script>
 </body>
 </html>

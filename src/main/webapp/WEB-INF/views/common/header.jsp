@@ -25,6 +25,9 @@
             학과별 자격증 & 취업 정보
         </div>
         <div id="app-user-info">
+	        <span>
+		        <a href="${pageContext.request.contextPath}/home">홈</a>
+		    </span>
             <c:choose>
                 <%-- 로그인 상태일 때 --%>
                 <c:when test="${not empty loginMember && not empty sessionScope.loggedMemberId}">

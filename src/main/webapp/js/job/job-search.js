@@ -30,13 +30,13 @@ $(document).ready(function() {
 
                     $.each(response.jobList, function(index, job) {
                         resultHtml += `
-                            <div class="job-card">
-                                <h4><a href="${job.url}" target="_blank">${job.title}</a></h4>
+                            <a href="${job.url}" target="_blank" title="새 창에서 열기" class="job-card">
+                                <h4>${job.title}</h4>
                                 <p>${job.companyName}</p>
                                 <div class="card-footer">
                                     <p>${job.field || ''}</p>
                                 </div>
-                            </div>
+                            </a>
                         `;
                     });
 
