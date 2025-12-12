@@ -60,6 +60,33 @@ public class MemberDAO {
         return exists;
     }
 
+    // 아이디로 비밀번호만 가져오기
+    public String getPasswordById(String memberId) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        String SQL_GET_PASSWORD = "SELECT member_password FROM member WHERE member_id = ?";
+        ResultSet rs = null;
+
+        try {
+            con = JdbcConnectUtil.getConnetion();
+            pstmt = con.prepareStatement(SQL_GET_PASSWORD);
+            pstmt.setString(1, memberId);
+
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString("member_password");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            JdbcConnectUtil.close(con, pstmt, rs);
+        }
+
+        return null;
+    }
+
     public boolean signup(MemberSignUpDTO mdto) {
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -87,32 +114,6 @@ public class MemberDAO {
         }
 
         return result > 0;
-    }
-
-    public boolean memberLogin(MemberLoginDTO mdto) {
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        boolean result = false;
-        String FIND_MEMBER = "SELECT * FROM member WHERE member_id = ? AND member_password = ?;";
-
-        try {
-            conn = JdbcConnectUtil.getConnetion();
-            pstmt = conn.prepareStatement(FIND_MEMBER);
-
-            pstmt.setString(1, mdto.getMemberId());
-            pstmt.setString(2, mdto.getMemberPassword());
-
-            rs = pstmt.executeQuery();
-
-            result = rs.next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            JdbcConnectUtil.close(conn, pstmt, rs);
-        }
-
-        return result;
     }
 
     public int memberUpdate(MemberUpdateDTO mdto) {

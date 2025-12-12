@@ -1,5 +1,6 @@
 package service.admin;
 
+import common.PasswordUtil;
 import dao.admin.AdminDeptDAO;
 import dao.admin.AdminMemberDAO;
 import dto.admin.AdminMemberDeleteDTO;
@@ -21,7 +22,10 @@ public class AdminMemberService {
 		if (adminMemberDAO.checkMemberIdExists(memberId)) {
 			return 0;
 		}
-		
+
+		String hashedPassword = PasswordUtil.hashPassword(dto.getMemberPassword());
+        dto.setMemberPassword(hashedPassword);
+
 		try {
 			int result = adminMemberDAO.insertMember(dto);
 			return result;
@@ -46,6 +50,9 @@ public class AdminMemberService {
 	}
 	
 	public boolean updatePassword(AdminMemberUpdateDTO dto) {
+        String hashedPassword = PasswordUtil.hashPassword(dto.getNewPassword());
+        dto.setNewPassword(hashedPassword);
+
 		int result = adminMemberDAO.updatePassword(dto);
 		
 		return result > 0;

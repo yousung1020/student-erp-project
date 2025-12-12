@@ -33,7 +33,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 CREATE TABLE IF NOT EXISTS member (
   `member_id` VARCHAR(45) NOT NULL,
-  `member_password` VARCHAR(45) NOT NULL,  
+  `member_password` VARCHAR(256) NOT NULL,
   `member_name` VARCHAR(45) NOT NULL,
   `member_email` VARCHAR(45) NOT NULL,
   `is_admin` boolean NOT NULL DEFAULT FALSE,

@@ -13,11 +13,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class JobSearchService {
-    public static void main(String[] args) throws IOException {
-        JobSearchService jobPostingService = new JobSearchService();
-        JobPostingResDTO a = jobPostingService.searchJobPostings("정보처리기사", 1);
-    }
-
     public JobPostingResDTO searchJobPostings(String keyword, int page) throws IOException {
         String encodedKeyword = URLEncoder.encode(keyword, StandardCharsets.UTF_8);
 

@@ -113,7 +113,7 @@ public class MemberSignupController extends HttpServlet {
         } else {
             if (memberService.isIdExists(memberId)) { 
                 request.setAttribute("errorType", "ID_DUPLICATION");
-                request.setAttribute("errorMessage", "입력하신 학번은 이미 사용 중입니다.");
+                request.setAttribute("errorMessage", "입력하신 아이디는 이미 사용 중입니다.");
             } else {
                 request.setAttribute("errorType", "DB_ERROR");
                 request.setAttribute("errorMessage", "회원가입 처리 중 시스템 오류가 발생했습니다.");
