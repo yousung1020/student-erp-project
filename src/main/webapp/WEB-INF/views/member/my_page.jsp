@@ -74,6 +74,8 @@
         </form>
     </div>
 
+    <jsp:include page="/WEB-INF/views/common/footer.jsp" />
+
     <%-- 자바스크립트 코드 블록 --%>
     <script type="text/javascript">
         // HTML 문서의 모든 요소가 로드된 후, 중괄호 안의 코드를 실행하라는 jQuery 문법.
