@@ -2,6 +2,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <style>
+    .search-input-group .select2-container {
+        flex-grow: 1;
+    }
+    
     /* 카드 컨테이너를 2열 Flexbox 레이아웃으로 설정 */
     .job-card-container {
         display: flex;
@@ -86,7 +90,7 @@
     <h2>🏢 자격증 기반 채용 공고 검색</h2>
     
     <div class="search-input-group">
-        <select id="job-search-select" style="width: calc(100% - 100px);">
+        <select id="job-search-select">
             <option value="">검색할 자격증을 선택하세요</option>
             <c:forEach var="cert" items="${certificates}">
                 <option value="${cert.certName}" ${cert.certName == searchKeyword ? 'selected' : ''}>${cert.certName}</option>
