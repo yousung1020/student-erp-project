@@ -108,15 +108,3 @@
     	</div>
 	</div>
   </section>
-<jsp:include page="/WEB-INF/views/common/footer.jsp" />
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const activeTab = urlParams.get('tab');
-
-    if (activeTab === 'job-postings') {
-        document.getElementById('tab-job-postings').checked = true;
-        document.getElementById('tab-cert-mgmt').checked = false; 
-    }
-});
-</script>

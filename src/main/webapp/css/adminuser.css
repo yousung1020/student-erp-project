@@ -1,0 +1,235 @@
+/* 관리자 회원 관리 페이지를 위한 기본 스타일 */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 20px;
+    padding: 0;
+    background-color: #f4f7f9;
+    color: #333;
+}
+
+/* 제목 스타일 (h2, h3 공통 적용) */
+h2, h3 {
+    color: #007bff; /* 주 색상 */
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 5px;
+    margin-top: 30px;
+}
+h3 {
+    font-size: 1.5em; /* h3은 h2보다 작게 */
+    border-bottom: 1px solid #007bff;
+}
+
+/* 메시지/오류 영역 스타일 */
+p {
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+p[style*="color: red"] { /* 오류 메시지 */
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24 !important;
+}
+p[style*="color: green"] { /* 성공 메시지 */
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724 !important;
+}
+
+/* 회원 상세 정보 표시 영역 스타일 */
+p strong {
+    display: inline-block;
+    width: 100px; /* 라벨 너비 고정 */
+    font-weight: bold;
+    color: #007bff;
+}
+p {
+    margin-bottom: 5px;
+}
+
+
+/* --- 테이블 스타일 --- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+table thead th {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid #007bff;
+}
+
+table tbody td {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    vertical-align: middle;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+/* 테이블 내 관리 버튼 */
+table td a {
+    color: #007bff;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+table td button {
+    background-color: #dc3545; /* 삭제 버튼 색상 */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+table td button:hover {
+    background-color: #c82333;
+}
+
+/* --- 폼 스타일 --- */
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    max-width: 500px;
+    margin-bottom: 30px;
+}
+
+form div {
+    margin-bottom: 15px;
+}
+/* 상세 페이지의 폼 요소 간격 조절 */
+form label[for="newPassword"],
+form label[for="newDeptId"] {
+    display: inline-block; /* 상세 페이지의 label 위치 조정 */
+    margin-right: 10px;
+    font-weight: bold;
+    color: #555;
+    width: 100px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="email"],
+form select {
+    width: calc(100% - 22px); /* 패딩 고려 */
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box; /* 패딩이 너비에 포함되도록 설정 */
+}
+/* 상세 페이지의 input 너비 재설정 */
+form input[name="newPassword"] {
+    width: calc(100% - 130px); /* label 너비 (100px) + 간격(30px) 고려 */
+    display: inline-block;
+}
+
+
+/* Select2 스타일 오버라이드 */
+.select2-container {
+    width: 100% !important;
+}
+.select2-container--default .select2-selection--single {
+    height: 38px !important; /* input과 높이 맞추기 */
+    padding: 5px 0 0 5px;
+    border: 1px solid #ced4da !important;
+    border-radius: 4px !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 36px !important;
+}
+
+
+form button[type="submit"] {
+    background-color: #28a745; /* 등록/수정 버튼 색상 */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+    margin-top: 10px; /* 버튼 위에 여백 추가 */
+}
+
+form button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+/* --- 링크 버튼 스타일 --- */
+.link-button-group {
+    margin-top: 20px;
+}
+
+/* 일반 링크도 버튼처럼 보이게 하는 스타일 (목록으로 돌아가기 포함) */
+a.btn,
+.link-button-group a,
+a[href="user-manage?action=list"] {
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+/* 자격증 관리 페이지 (메인 버튼) */
+a[href="cert-manage"] {
+    background-color: #007bff;
+    color: white;
+    margin-right: 15px;
+}
+a[href="cert-manage"]:hover {
+    background-color: #0056b3;
+}
+
+/* 로그아웃 (보조 버튼) */
+a[href="Logout"] {
+    background-color: #6c757d;
+    color: white;
+}
+a[href="Logout"]:hover {
+    background-color: #5a6268;
+}
+
+/* 회원 목록으로 링크 (상세 페이지의 목록 돌아가기 버튼) */
+a[href="user-manage?action=list"] {
+    background-color: #17a2b8; /* 정보/목록 색상 */
+    color: white;
+    margin-top: 20px;
+}
+a[href="user-manage?action=list"]:hover {
+    background-color: #138496;
+}
+
+
+/* 구분선 */
+hr {
+    border: 0;
+    height: 1px;
+    background: #ddd;
+    margin: 30px 0;
+}

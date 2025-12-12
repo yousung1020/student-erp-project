@@ -106,7 +106,22 @@ public class AdminMemberController extends HttpServlet {
 		createDTO.setMemberName(request.getParameter("memberName"));
 		createDTO.setMemberEmail(request.getParameter("memberEmail"));
 		createDTO.setDeptId(Integer.parseInt(request.getParameter("deptId")));
-		
+		String memberEmail = request.getParameter("memberEmail");
+		String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+		if (memberEmail == null || !memberEmail.matches(emailRegex)) {
+	        request.setAttribute("error", "올바르지 않은 이메일 형식입니다.");
+	        try {
+	            List<AdminMemberSelectDTO> memberList = memberService.getMemberList();
+	            request.setAttribute("memberList", memberList);
+	            List<DeptDTO> deptList = memberService.getAllDepartments(); 
+	            request.setAttribute("deptList", deptList);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        
+	        request.getRequestDispatcher("/WEB-INF/views/admin/user_management.jsp").forward(request, response);
+	        return;
+	    }
 		try {
 			int success = memberService.registerMember(createDTO);
 			
