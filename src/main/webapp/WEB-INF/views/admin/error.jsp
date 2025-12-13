@@ -8,6 +8,6 @@
 </head>
 <body>
 ## 에러 페이지입니다.
-<a href="Logout">로그인 페이지로 돌아가기</a>
+<a href="/student-erp-project/member/login">로그인 페이지로 돌아가기</a>
 </body>
 </html>

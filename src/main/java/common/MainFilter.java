@@ -4,6 +4,7 @@ import dto.member.MemberInfoDTO;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import service.member.MemberService;
@@ -16,13 +17,13 @@ public class MainFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-        
+        // ServletRequest를 다운캐스팅
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+
         // 모든 요청/응답에 대해 UTF-8 인코딩 설정
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
 
-        // ServletRequest를 다운캐스팅하여 세션을 사용
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpSession session = httpRequest.getSession();
 
         // 세션이 존재하고, 회원id가 있다면
